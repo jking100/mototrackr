@@ -10,9 +10,9 @@ import {
 //my components
 import { NavBar } from "@/components/ui/NavBar"
 import { Home } from "@/pages/Home"
-import { About } from "@/pages/About"
+import { Test } from "@/pages/Test"
 import { Log } from "@/pages/Log"
-import { Admin } from "@/pages/Admin"
+import { Results } from "@/pages/Results"
 
 function App() {
 
@@ -22,9 +22,9 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/about" element={ <About /> } />
+        <Route path="/test" element={ <Test /> } />
         <Route path="/log" element={ <Log /> }/>
-        <Route path="/admin" element={ <Admin /> }/>
+        <Route path="/results" element={ <Results /> }/>
       </Routes>
     </BrowserRouter>
   );
