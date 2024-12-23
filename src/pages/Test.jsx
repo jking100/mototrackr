@@ -1,4 +1,4 @@
-export function About() {
+export function Test() {
     return (
         <div>
             <h1>About.jsx</h1>

@@ -1,4 +1,4 @@
-export function Admin() {
+export function Results() {
     return (
         <div>
             <h1>Admin.jsx</h1>
