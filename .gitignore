@@ -1,4 +1,5 @@
 *.pem
+.env
 
 # Logs
 logs
