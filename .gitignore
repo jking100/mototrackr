@@ -1,5 +1,6 @@
 *.pem
 .env
+devlog*.md
 
 # Logs
 logs
