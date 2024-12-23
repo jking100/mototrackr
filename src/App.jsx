@@ -1,5 +1,5 @@
 //UI Components - https://daisyui.com/components/
-import "./App.css"
+import "./App.css";
 //import React from "react";
 import {
   BrowserRouter,
@@ -8,11 +8,11 @@ import {
 } from "react-router-dom";
 
 //my components
-import { NavBar } from "@/components/ui/NavBar"
-import { Home } from "@/pages/Home"
-import { Test } from "@/pages/Test"
-import { Log } from "@/pages/Log"
-import { Results } from "@/pages/Results"
+import { NavBar } from "@/components/ui/NavBar";
+import { Home } from "@/pages/Home";
+import { Test } from "@/pages/Test";
+import { Log } from "@/pages/Log";
+import { Results } from "@/pages/Results";
 
 function App() {
 
@@ -30,4 +30,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
