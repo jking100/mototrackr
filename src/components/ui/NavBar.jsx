@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 export function NavBar() {
-    const siteTitle = "React+JS+TailWind+DaisyUI Template";
+    const siteTitle = "MotoTrackr";
 
     return (
         <>
@@ -10,9 +10,9 @@ export function NavBar() {
                 <button className="btn btn-ghost text-xl"><Link to="/">{siteTitle}</Link></button>
             </div>
             <div className="navbar-end">
-                <button className="btn btn-ghost text-xl"><Link to="/about">About</Link></button>
                 <button className="btn btn-ghost text-xl"><Link to="/log">Log</Link></button>
-                <button className="btn btn-ghost text-xl"><Link to="/admin">Admin</Link></button>
+                <button className="btn btn-ghost text-xl"><Link to="/results">Results</Link></button>
+                <button className="btn btn-ghost text-xl"><Link to="/test">Test</Link></button>
             </div>
                 
         </div>
