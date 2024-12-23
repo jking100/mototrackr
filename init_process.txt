@@ -1,0 +1,130 @@
+init process for react+js with tailwind and daisyUI project template
+this process should leave you with a basic multi view web site template with a navbar
+
+//create react template with js, npm run dev to launch
+npm create vite@latest . -- --template react
+
+//install tailwindcss and dependancies
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+
+//add content config to tailwind.config.js
+content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+
+//add directives to top css
+//add to top of src/index.css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+//test it
+<h1 className="text-3xl font-bold underline">
+    if this is big n bold n underlined tailwind is working
+</h1>
+
+//install react router for page navigation
+npm i react-router-dom
+
+//install daisyUI
+npm i -D daisyui@latest
+
+//hook daisyUI into tailwind tailwind.config.js file
+import daisyui from "daisyui"
+
+//insert daisyui into tailwind.config.js plugins sections
+plugins: [
+    daisyui,
+],
+
+-------------------------------------------------vite.config.js:
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import path from 'path';
+
+//needed to fix definition error for __dirname
+//https://flaviocopes.com/fix-dirname-not-defined-es-module-scope/
+import { fileURLToPath } from 'url'
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src')
+    }
+  }
+})
+
+-------------------------------------------------jsconfig.json:
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
+  }
+}
+
+-------------------------------------------------postcss.config.js:
+export default {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+}
+
+-------------------------------------------------tailwind.config.js:
+/** @type {import('tailwindcss').Config} */
+import daisyui from "daisyui"
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [daisyui],
+}
+
+-------------------------------------------------package.json:
+{
+  "name": "frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.1.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "@types/react": "^18.3.17",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "daisyui": "^4.12.22",
+    "eslint": "^9.17.0",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.16",
+    "globals": "^15.13.0",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "vite": "^6.0.3"
+  }
+}
+
+
