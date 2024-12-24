@@ -8,5 +8,5 @@ export function Log() {
             <p>The button below should be big blue and have a hover effect if daisyUI is working</p>
             <button className="btn btn-primary w-64">Big Blue Button</button>
         </div>
-    )
+    );
 }
