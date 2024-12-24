@@ -17,16 +17,20 @@ import { Results } from "@/pages/Results";
 function App() {
 
   return (
-    <BrowserRouter>
-      <NavBar />
+    <div className="container mx-auto">
+    <div className="overflow-x-hidden min-h-screen w-full max-w-full">
+      <BrowserRouter>
+        <NavBar />
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/test" element={ <Test /> } />
-        <Route path="/log" element={ <Log /> }/>
-        <Route path="/results" element={ <Results /> }/>
-      </Routes>
-    </BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/test" element={ <Test /> } />
+          <Route path="/log" element={ <Log /> }/>
+          <Route path="/results" element={ <Results /> }/>
+        </Routes>
+      </BrowserRouter>
+    </div>
+    </div>
   );
 }
 
