@@ -12,7 +12,6 @@ import { Home } from "@/pages/Home";
 import { Test } from "@/pages/Test";
 import { Log } from "@/pages/Log";
 import { Results } from "@/pages/Results";
-//import { DeviceMotionProvider } from "@/components/features/deviceMotion/";
 
 function App() {
   return (
