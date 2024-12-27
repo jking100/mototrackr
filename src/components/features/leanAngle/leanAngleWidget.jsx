@@ -2,7 +2,8 @@
 
 //status 12/26: working tech demo of 1 axis tilt, could use somesmoothing on the rendered data
 
-//todo: work on getting multiaxis tilt running because it will be needed in real world
+//todo: brush up the 2 axis tilt, read paper to see if there is a way to do 3 axis
+//      implement smoothing on the values either on the way in or out
 //      possibly abstract tilt handling away so that we can easily call it anywhere (useful for future plans)
 
 //faroff(post first live release): create 2d map of gps tags bundled with lean angle at that time. this can be done 
@@ -17,6 +18,7 @@ import { useDeviceMotion } from "../deviceMotion";
 export function LeanAngleWidget(){
     const [leanAngle, setLeanAngle] = useState(0);
     const [leanAngleLinear, setLeanAngleLinear] = useState(0);
+    const [leanAngle2Axis, setLeanAngle2Axis] = useState(0);
     const { motionData, isAvailable, permissionStatus } = useDeviceMotion();
     const lastMeasurement = useRef(0);
 
@@ -25,7 +27,7 @@ export function LeanAngleWidget(){
         //update lean angle whenever we get new motion data - throttle this
         //motion data seems to stream in at a cap of 50hz no matter what
         const elapsed = Date.now() - lastMeasurement.current;
-        if (elapsed > 1000 / 5){
+        if (elapsed > 1000 / 3){
             //alert(`updating lean angle @ ${1000/elapsed}Hz`);
             lastMeasurement.current = Date.now();
             //below is lean equation. this is assuming the y axis is primary axis
@@ -46,6 +48,12 @@ export function LeanAngleWidget(){
             setLeanAngleLinear(
                 (90/9.8) * motionData.acceleration.xGrav
             );
+
+            //2axis equation thanks to https://www.analog.com/en/resources/app-notes/an-1057.html
+            //measures differently that the ones above. this measures tilt with phone flat and y axis direction of tilt
+            setLeanAngle2Axis(
+                -Math.atan(motionData.acceleration.xGrav/motionData.acceleration.yGrav) * (180 / Math.PI)
+            );
         }
     },[motionData]);
 
@@ -57,7 +65,11 @@ export function LeanAngleWidget(){
             <br />
             <p>Linear forumla: </p>
             <input type="range" min="-90" max="90" value={leanAngleLinear} className="range range-accent" />
+            <br />
+            <p>2 axis forumla: </p>
+            <input type="range" min="-90" max="90" value={leanAngle2Axis} className="range range-accent" />
 
+            <br />
             <p>{leanAngle}||{leanAngleLinear}</p>
         </div>
     );
