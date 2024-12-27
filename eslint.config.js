@@ -24,7 +24,6 @@ export default [
       'react-refresh': reactRefresh,
     },
     rules: {
-      semi: ["error", "always"], 
       ...js.configs.recommended.rules,
       ...react.configs.recommended.rules,
       ...react.configs['jsx-runtime'].rules,
@@ -34,6 +33,8 @@ export default [
         'warn',
         { allowConstantExport: true },
       ],
+      semi: ["error", "always"], 
+      "no-unused-vars": "warn"
     },
   },
 ];
