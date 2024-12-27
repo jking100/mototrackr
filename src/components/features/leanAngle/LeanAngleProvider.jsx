@@ -54,3 +54,10 @@ LeanAngleProvider.propTypes = {
 //so operate on the perpendicual axis
 //equations takes (x) in meters per second and returns a value in degrees with + representing lean to right
 //arcsin(abs(x)/9.8)*180/pi
+
+//https://www.analog.com/en/resources/app-notes/an-1057.html
+
+//so on a bike with landscape phone mounting which seems to be common.
+// the iphones y axis would be the one directly perpendicular to gravity and path of travel.
+// z would be G. so i think i should get my tilt from y and z axis as x axis will be in line with the motorcycles
+// path of travel, so i think that axis will have the least reliable readings in this situation
