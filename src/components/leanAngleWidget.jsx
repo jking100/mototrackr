@@ -23,11 +23,8 @@ export function LeanAngleWidget(){
             <p>Teast - LeanAngleWidget.jsx</p>
             {leanAngle &&(
                 <div>
-                <p>2 Axis formula - Value: {leanAngle.leanAngle2Axis.toFixed(0)} </p>
+                <p>2 Axis formula(y,z axis) - Value: {leanAngle.leanAngle2Axis.toFixed(0)} </p>
                 <input type="range" min="-90" max="90" value={leanAngle.leanAngle2Axis} className="range range-accent" />
-                <br />
-                <p>1 Axis formula - Value: {leanAngle.leanAngle1Axis.toFixed(0)} </p>
-                <input type="range" min="-90" max="90" value={leanAngle.leanAngle1Axis} className="range range-accent" />
                 </div>
             )}
             {!leanAngle &&(
@@ -38,16 +35,4 @@ export function LeanAngleWidget(){
             )}
         </>
     );
-    /*
-    return(
-        <div className="outline">
-            <p>LeanAngleWidget.jsx</p>
-            <p>2 Axis formula - Value: {leanAngle.leanAngle2Axis.toFixed(0)} </p>
-            <input type="range" min="-90" max="90" value={leanAngle.leanAngle2Axis} className="range range-accent" />
-            <br />w
-            <p>1 Axis formula - Value: {leanAngle.leanAngle1Axis.toFixed(0)} </p>
-            <input type="range" min="-90" max="90" value={leanAngle.leanAngle1Axis} className="range range-accent" />
-        </div>
-    );
-    */
 }
