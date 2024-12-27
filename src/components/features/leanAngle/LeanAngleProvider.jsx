@@ -21,15 +21,17 @@ export const LeanAngleProvider = ({children}) => {
 
             //see bottom of file for math explanation
             
-            setLeanAngle1Axis( //not very accurate for testing, dont use
+            setLeanAngle1Axis( //not very accurate for testing, dont use: targets lean in y axis with phone flat landscape
                 // will produce NaN if abs(xGrav) > 9.8 so clamp to -1 thru 1 returns number [-90->90] 
-                Math.asin(Math.max(-1, Math.min(1, motionData.acceleration.xGrav / 9.8))) * (180 / Math.PI)
+                -Math.asin(Math.max(-1, Math.min(1, motionData.acceleration.yGrav / 9.8))) * (180 / Math.PI)
             );
 
             //2axis equation thanks to https://www.analog.com/en/resources/app-notes/an-1057.html
-            //measures differently that the ones above. this measures tilt with phone flat and y axis direction of tilt
+            //targets lean in y axis with phone flat landscape
+            //even without calibration seems to be very accurate, i suspect do to not relying on an assumption
+            //that the sensor will read the full force of gravity at rest (no hard coded G=-9.8...)
             setLeanAngle2Axis(
-                -Math.atan(motionData.acceleration.xGrav/motionData.acceleration.yGrav) * (180 / Math.PI)
+                Math.atan(motionData.acceleration.yGrav/motionData.acceleration.zGrav) * (180 / Math.PI)
             );
         }
     },[motionData]);
