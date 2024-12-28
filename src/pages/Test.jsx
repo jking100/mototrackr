@@ -24,19 +24,21 @@ export function Test() {
             <label htmlFor="accel">Show Accelerometer data</label>
         </div>
 
-        <DeviceMotionProvider>
-            {showGPS && (
-                    <GPSWidget />
-            )}
             {showLean && (
-                <LeanAngleProvider>
-                    <LeanAngleWidget />
-                </LeanAngleProvider>
+                <DeviceMotionProvider>
+                    <LeanAngleProvider>
+                        <LeanAngleWidget />
+                    </LeanAngleProvider>
+                </DeviceMotionProvider>
+            )}
+            {showGPS && (
+                <GPSWidget />
             )}
             {showAccelerometer && (
-                <DeviceMotionTable />
+                <DeviceMotionProvider>
+                    <DeviceMotionTable />
+                </DeviceMotionProvider>
             )}
-        </DeviceMotionProvider>
         </>
     );
 }
