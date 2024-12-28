@@ -24,7 +24,7 @@ export function LeanAngleWidget(){
             {leanAngle &&(
                 <div>
                 <p>2 Axis formula(y,z axis) - Value: {leanAngle.leanAngle2Axis.toFixed(0)} </p>
-                <input type="range" min="-90" max="90" value={leanAngle.leanAngle2Axis} className="range range-accent" />
+                <input type="range" min="-90" max="90" value={leanAngle.leanAngle2Axis} className="range range-accent" readOnly />
                 </div>
             )}
             {!leanAngle &&(
