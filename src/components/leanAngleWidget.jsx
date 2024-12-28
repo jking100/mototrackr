@@ -20,7 +20,6 @@ export function LeanAngleWidget(){
 
     return (
         <>
-            <p>Teast - LeanAngleWidget.jsx</p>
             {leanAngle &&(
                 <div>
                 <p>2 Axis formula(y,z axis) - Value: {leanAngle.leanAngle2Axis.toFixed(0)} </p>
