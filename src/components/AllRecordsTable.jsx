@@ -6,7 +6,7 @@ export function AllRecordsTable() {
 
     useEffect(() =>{
         getData();
-    });
+    },[]);
 
     const tableContents = userSubmissions === undefined
     ? <span className="loading loading-bars loading-md text-accent"></span>
