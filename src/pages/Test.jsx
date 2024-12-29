@@ -4,6 +4,7 @@ import { LeanAngleWidget } from "@/components/LeanAngleWidget";
 import { LeanAngleProvider } from "@/components/features/leanAngle";
 import { GPSWidget } from "@/components/GPSWidget";
 import { useState } from "react";
+import { GPSProvider } from "@/components/features/geolocation";
 
 //https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API
 
@@ -32,7 +33,9 @@ export function Test() {
                 </DeviceMotionProvider>
             )}
             {showGPS && (
-                <GPSWidget />
+                <GPSProvider>
+                    <GPSWidget />
+                </GPSProvider>
             )}
             {showAccelerometer && (
                 <DeviceMotionProvider>
