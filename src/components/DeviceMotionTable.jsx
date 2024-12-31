@@ -3,7 +3,7 @@
 import { useDeviceMotion } from "@/components/features/deviceMotion/";
 
 export function DeviceMotionTable (){
-    const { motionData, isAvailable, permissionState } = useDeviceMotion();
+    const {motionData, isAvailable, permissions} = useDeviceMotion();
 
     return (
         <div className="grid gap-6">
@@ -22,16 +22,6 @@ export function DeviceMotionTable (){
                         <div className="text-center">
                             <div className="text-sm text-gray-200 mb-1">Z-Axis</div>
                             <div className="font-mono"><p>{motionData.acceleration.z.toFixed(1)} m/s²</p></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="bg-slate-500 p-4 rounded-lg shadow">
-                    <h2 className="text-lg font-semibold mb-3">Tilt</h2>
-                    <div className="grid grid-cols-1 gap-4">
-                        <div className="text-center">
-                            <div className="text-sm text-gray-200 mb-1">Flat landscape: </div>
-                            <div className="font-mono text-gray-900 dark:text-white">{motionData.tilt.horizontalTilt.toFixed(1)} degrees</div>
                         </div>
                     </div>
                 </div>
@@ -73,4 +63,4 @@ export function DeviceMotionTable (){
                 </div>
             </div>
     );
-}
+};
