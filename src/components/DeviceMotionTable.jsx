@@ -3,7 +3,7 @@
 import { useDeviceMotion } from "@/components/features/deviceMotion/";
 
 export function DeviceMotionTable (){
-    const {motionData, isAvailable, permissions} = useDeviceMotion();
+    const {motionData, isAvailable, permissions, errorBox} = useDeviceMotion();
 
     return (
         <div className="grid gap-6">
@@ -61,6 +61,7 @@ export function DeviceMotionTable (){
                         </div>
                     </div>
                 </div>
-            </div>
+            {errorBox}
+        </div>
     );
 };
