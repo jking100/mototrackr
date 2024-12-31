@@ -14,6 +14,8 @@
 
 //import { useEffect, useState, useRef } from "react";
 import { useDeviceMotion } from "@/components/features/deviceMotion";
+import { MotorcycleLeanGauge } from "@/components/ui/MotorcycleLeanGauge";
+import { useEffect } from "react";
 
 export function LeanAngleWidget(){
     const { motionData, isAvailable, permissionState } = useDeviceMotion();
@@ -22,17 +24,13 @@ export function LeanAngleWidget(){
 
     return (
         <>
-            <p>Teast - LeanAngleWidget.jsx</p>
             {isAvailable &&(
-                <div>
-                <p>2 Axis formula(y,z axis) - Value: {motionData.tilt.horizontalTilt.toFixed(0)} </p>
-                <input type="range" min="-90" max="90" value={motionData.tilt.horizontalTilt} className="range range-accent" />
+                <div className="bg-slate-500 artboard-demo artboard-horizontal phone-1">
+                    < MotorcycleLeanGauge leanAngle={motionData.tilt.horizontalTilt}/>
                 </div>
             )}
             {!isAvailable &&(
-                <div>
-                <p>Issue with reading lean angle</p>
-                </div>
+                <p>Issue with access to device accelerometer</p>
             )}
         </>
     );
