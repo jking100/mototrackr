@@ -13,24 +13,23 @@
 //          every 5 or so seconds because super high resolution not needed for map
 
 //import { useEffect, useState, useRef } from "react";
-import { useDeviceMotion } from "@/components/features/deviceMotion";
+import { useDeviceMotion } from "@/components/features/deviceMotion/useDeviceMotion";
 import { MotorcycleLeanGauge } from "@/components/ui/MotorcycleLeanGauge";
 
 export function LeanAngleWidget(){
-    const { motionData, isAvailable, permissionState } = useDeviceMotion();
+    const { motionData, isAvailable, permissionState, errorBox } = useDeviceMotion(3);
     
-    //write a throttled useffect here to average and slow the readings display for the widget
-
     return (
         <>
             {isAvailable &&(
                 <div className="bg-slate-500 artboard-demo artboard-horizontal phone-1">
-                    < MotorcycleLeanGauge leanAngle={motionData.tilt.horizontalTilt}/>
+                    < MotorcycleLeanGauge leanAngle={motionData.tilt.flatYaxis}/>
                 </div>
             )}
             {!isAvailable &&(
                 <p>Issue with access to device accelerometer</p>
             )}
+            {errorBox}
         </>
     );
 }

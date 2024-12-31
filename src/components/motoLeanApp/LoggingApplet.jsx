@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext, useRef } from "react";
 import { GPSContext } from "@/components/features/geolocation/GPSContext";
-import { DeviceMotionProvider } from "@/components/features/deviceMotion/";
 import { LeanAngleWidget } from "@/components/leanAngleWidget";
 
 export function LoggingApplet() {
@@ -78,9 +77,7 @@ export function LoggingApplet() {
                 <div className="card bg-base-100 shadow-xl">
                     <div className="card-body">
                         <h2 className="card-title">Recording in Progress</h2>
-                        <DeviceMotionProvider>
-                            <LeanAngleWidget/>
-                        </DeviceMotionProvider>
+                        <LeanAngleWidget/>
                         
                         <div className="mt-4">
                             <p>Latest Reading:</p>

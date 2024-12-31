@@ -6,7 +6,7 @@ import {
   Route
 } from "react-router-dom";
 
-//my components
+//my pages
 import { Home } from "@/pages/Home";
 import { Test } from "@/pages/Test";
 import { Log } from "@/pages/Log";

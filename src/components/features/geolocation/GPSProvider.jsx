@@ -62,11 +62,9 @@ export function GPSProvider({children}) {
     };
 
     return (
-        <div className="outline">
             <GPSContext.Provider value={GPSContextValues}>
                 {children}    
             </GPSContext.Provider>      
-        </div>
     );
 };
 
