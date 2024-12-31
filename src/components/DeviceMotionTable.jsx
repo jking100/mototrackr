@@ -3,7 +3,8 @@
 import { useDeviceMotion } from "@/components/features/deviceMotion/";
 
 export function DeviceMotionTable (){
-    const { motionData, isAvailable, permissionStatus } = useDeviceMotion();
+    const { motionData, isAvailable, permissionState } = useDeviceMotion();
+
     return (
         <div className="grid gap-6">
             <br />
@@ -26,19 +27,29 @@ export function DeviceMotionTable (){
                 </div>
 
                 <div className="bg-slate-500 p-4 rounded-lg shadow">
+                    <h2 className="text-lg font-semibold mb-3">Tilt</h2>
+                    <div className="grid grid-cols-1 gap-4">
+                        <div className="text-center">
+                            <div className="text-sm text-gray-200 mb-1">Flat landscape: </div>
+                            <div className="font-mono text-gray-900 dark:text-white">{motionData.tilt.horizontalTilt.toFixed(1)} degrees</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="bg-slate-500 p-4 rounded-lg shadow">
                     <h2 className="text-lg font-semibold mb-3">Acceleration with Gravity</h2>
                     <div className="grid grid-cols-3 gap-4">
                         <div className="text-center">
                             <div className="text-sm text-gray-200 mb-1">X-Axis</div>
-                            <div className="font-mono">{motionData.acceleration.xGrav.toFixed(1)} m/s²</div>
+                            <div className="font-mono">{motionData.accelerationIncludingGravity.x.toFixed(1)} m/s²</div>
                         </div>
                         <div className="text-center">
                             <div className="text-sm text-gray-200 mb-1">Y-Axis</div>
-                            <div className="font-mono">{motionData.acceleration.yGrav.toFixed(1)} m/s²</div>
+                            <div className="font-mono">{motionData.accelerationIncludingGravity.y.toFixed(1)} m/s²</div>
                         </div>
                         <div className="text-center">
                             <div className="text-sm text-gray-200 mb-1">Z-Axis</div>
-                            <div className="font-mono">{motionData.acceleration.zGrav.toFixed(1)} m/s²</div>
+                            <div className="font-mono">{motionData.accelerationIncludingGravity.z.toFixed(1)} m/s²</div>
                         </div>
                     </div>
                 </div>

@@ -8,24 +8,39 @@ export const DeviceMotionProvider = ({ children }) => {
     const [isAvailable, setIsAvailable] = useState(false);
     const [motionData, setMotionData] = useState({
         acceleration: {
-            xGrav: 0, yGrav: 0, zGrav: 0, x: 0, y: 0, z: 0
+            x: 0, y: 0, z: 0
+        },
+        accelerationIncludingGravity: {
+            x: 0, y: 0, z: 0
+        },
+        tilt: {
+            horizontalTilt: 0
         },
         rotationRate: {
-            alpha: 0, beta: 0, gamma: 0,
-        },
+            alpha: 0, beta: 0, gamma: 0
+        }
     });
 
     const initializeDeviceMotion = () => {
         const handleMotion = (event) => {
             if (event.accelerationIncludingGravity && event.acceleration) {
                 setMotionData({
+                    accelerationIncludingGravity: {
+                    x: event.accelerationIncludingGravity.x ?? 0,
+                    y: event.accelerationIncludingGravity.y ?? 0,
+                    z: event.accelerationIncludingGravity.z ?? 0,
+                    },
                     acceleration: {
-                    xGrav: event.accelerationIncludingGravity.x ?? 0,
-                    yGrav: event.accelerationIncludingGravity.y ?? 0,
-                    zGrav: event.accelerationIncludingGravity.z ?? 0,
-                    x: event.acceleration.x ?? 0,
-                    y: event.acceleration.y ?? 0,
-                    z: event.acceleration.z ?? 0
+                        x: event.acceleration.x ?? 0,
+                        y: event.acceleration.y ?? 0,
+                        z: event.acceleration.z ?? 0
+                    },
+                    tilt: {
+                        //2axis equation thanks to https://www.analog.com/en/resources/app-notes/an-1057.html
+                        //targets lean in y axis with phone flat landscape
+                        //even without calibration seems to be very accurate, i suspect do to not relying on an assumption
+                        //that the sensor will read the full force of gravity at rest (no hard coded G=-9.8...)
+                        horizontalTilt: Math.atan(event.accelerationIncludingGravity.y/event.accelerationIncludingGravity.z) * (180 / Math.PI)
                     },
                     rotationRate: {
                     alpha: event.rotationRate?.alpha ?? 0,
@@ -44,8 +59,8 @@ export const DeviceMotionProvider = ({ children }) => {
     };
 
     const requestPermission = async () => {
-        console.log("Requesting perms");
-        // Check if we need to request permission (iOS 13+)
+        //Rework this
+        // Check if we need to request permission on iphones/safari
         if (typeof DeviceMotionEvent.requestPermission === 'function') {
           try {
             const permission = await DeviceMotionEvent.requestPermission();
@@ -73,9 +88,12 @@ export const DeviceMotionProvider = ({ children }) => {
         }
         setIsAvailable(true);
 
+        console.log(`in my useeffect in provider ${typeof DeviceMotionEvent.requestPermission}`);
+
         // For non-iOS devices, we can initialize right away
         // For iOS, we'll wait for explicit permission
         if (typeof DeviceMotionEvent.requestPermission !== 'function') {
+            console.log("in here");
             setPermissionStatus('granted');
             initializeDeviceMotion();
         }
