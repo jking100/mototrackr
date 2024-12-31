@@ -8,6 +8,7 @@ export function Log() {
             <GPSProvider>
                 <LoggingApplet />
             </GPSProvider> 
+            <a href="/" className="btn btn-sm rounded-badge btn-accent fixed bottom-8 right-8">Home</a>
         </>
     );
 }
