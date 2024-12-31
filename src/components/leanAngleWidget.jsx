@@ -13,24 +13,25 @@
 //          every 5 or so seconds because super high resolution not needed for map
 
 //import { useEffect, useState, useRef } from "react";
-import { useLeanAngle } from "@/components/features/leanAngle";
+import { useDeviceMotion } from "@/components/features/deviceMotion";
 
 export function LeanAngleWidget(){
-    const { leanAngle } = useLeanAngle();
+    const { motionData, isAvailable, permissionState } = useDeviceMotion();
+    
+    //write a throttled useffect here to average and slow the readings display for the widget
 
     return (
         <>
             <p>Teast - LeanAngleWidget.jsx</p>
-            {leanAngle &&(
+            {isAvailable &&(
                 <div>
-                <p>2 Axis formula(y,z axis) - Value: {leanAngle.leanAngle2Axis.toFixed(0)} </p>
-                <input type="range" min="-90" max="90" value={leanAngle.leanAngle2Axis} className="range range-accent" />
+                <p>2 Axis formula(y,z axis) - Value: {motionData.tilt.horizontalTilt.toFixed(0)} </p>
+                <input type="range" min="-90" max="90" value={motionData.tilt.horizontalTilt} className="range range-accent" />
                 </div>
             )}
-            {!leanAngle &&(
+            {!isAvailable &&(
                 <div>
                 <p>Issue with reading lean angle</p>
-                {alert(typeof leanAngle)}
                 </div>
             )}
         </>
