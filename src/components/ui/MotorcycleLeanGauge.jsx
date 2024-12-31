@@ -20,43 +20,43 @@ export const MotorcycleLeanGauge = ({
           
           // Arc configuration
           arc={{
-            width: 0.2,  // Width of the arc
-            padding: 0.02,  // Padding between subarcs
-            cornerRadius: 1,  // Rounded corners
+            width: 0.15,  // Width of the arc
+            padding: 0.01,  // Padding between subarcs
+            cornerRadius: 3,  // Rounded corners
             subArcs: [
               { 
                 limit: -45, 
-                color: '#EA4288',  // Empty/grey color
+                color: '#EA4288',  // red
                 showTick: true 
               },
               { 
                 limit: -30, 
-                color: '#F5CD19',  // Red
+                color: '#F5CD19',  // yellow
                 showTick: true 
               },
               { 
                 limit: -15, 
-                color: '#5BE12C',  // Yellow
+                color: '#5BE12C',  // green
                 showTick: true 
               },
               { 
                 limit: 15, 
-                color: '#5BE12C',  // Green
+                color: '#5BE12C',  // green
                 showTick: true 
               },
               { 
                 limit: 30, 
-                color: '#5BE12C',  // Yellow
+                color: '#5BE12C',  // green
                 showTick: true 
               },
               { 
                 limit: 45, 
-                color: '#F5CD19',  // Red
+                color: '#F5CD19',  // Yellow
                 showTick: true 
               },
               { 
                 color: '#EA4288',  // Empty/grey color
-                showTick: true
+                showTick: false
               }
             ]
           }}
@@ -65,7 +65,7 @@ export const MotorcycleLeanGauge = ({
           pointer={{
             type: "needle",
             color: "#cf6c65",
-            length: 0.8,
+            length: 0.9,
             width: 10,
             animate: true,
             elastic: true
@@ -86,7 +86,6 @@ export const MotorcycleLeanGauge = ({
               type: "inner",
               ticks: [
                 { value: -75 },
-                { value: -65 },
                 { value: -45 },
                 { value: -30 },
                 { value: -15 },
