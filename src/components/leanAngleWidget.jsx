@@ -17,10 +17,8 @@ import { useDeviceMotion } from "@/components/features/deviceMotion/useDeviceMot
 import { MotorcycleLeanGauge } from "@/components/ui/MotorcycleLeanGauge";
 
 export function LeanAngleWidget(){
-    const { motionData, isAvailable, permissionState, errorBox } = useDeviceMotion();
+    const { motionData, isAvailable, permissionState, errorBox } = useDeviceMotion(3);
     
-    //write a throttled useffect here to average and slow the readings display for the widget
-
     return (
         <>
             {isAvailable &&(
