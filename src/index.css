@@ -26,12 +26,21 @@ a:hover {
   color: #535bf2;
 }
 
+html {
+  height: -webkit-fill-available;
+}
+
 body {
   margin: 0;
   display: flex;
-  place-items: center;
-  min-width: 320px;
+  flex-direction: column;
   min-height: 100vh;
+  /* Mobile viewport height fix */
+  min-height: -webkit-fill-available;
+  /* Prevent unwanted touch behaviors */
+  touch-action: manipulation;
+  /* Safe area insets for notched devices */
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
 h1 {
@@ -61,7 +70,7 @@ button:focus-visible {
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
-    background-color: #ffffff;
+    background-color: #c0c0c0;
   }
   a:hover {
     color: #747bff;
