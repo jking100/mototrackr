@@ -1,8 +1,7 @@
 import { useState, useEffect, useContext, useRef } from "react";
-import { GPSContext } from "./features/geolocation/GPSContext";
-import { LeanAngleWidget } from "@/components/leanAngleWidget";
-import { LeanAngleProvider } from "@/components/features/leanAngle";
+import { GPSContext } from "@/components/features/geolocation/GPSContext";
 import { DeviceMotionProvider } from "@/components/features/deviceMotion/";
+import { LeanAngleWidget } from "@/components/leanAngleWidget";
 
 export function LoggingApplet() {
     const [flow, setFlow] = useState("init"); // init, record, submit
@@ -80,9 +79,7 @@ export function LoggingApplet() {
                     <div className="card-body">
                         <h2 className="card-title">Recording in Progress</h2>
                         <DeviceMotionProvider>
-                            <LeanAngleProvider>
-                                <LeanAngleWidget />
-                            </LeanAngleProvider>
+                            <LeanAngleWidget/>
                         </DeviceMotionProvider>
                         
                         <div className="mt-4">
