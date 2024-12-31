@@ -1,10 +1,10 @@
-import { DeviceMotionProvider } from "@/components/features/deviceMotion/";
 import { DeviceMotionTable } from "@/components/DeviceMotionTable";
 import { LeanAngleWidget } from "@/components/LeanAngleWidget";
 import { GPSWidget } from "@/components/GPSWidget";
 import { GPSProvider } from "@/components/features/geolocation";
-import { useState } from "react";
 import { NavBar } from "@/components/ui/NavBar";
+
+import { useState } from "react";
 
 export function Test() {
     const [showLean, setShowLean] = useState(false);
@@ -46,9 +46,7 @@ export function Test() {
             </div>
 
             {showLean && (
-                <DeviceMotionProvider>
-                        <LeanAngleWidget />
-                </DeviceMotionProvider>
+                <LeanAngleWidget />
             )}
             {showGPS && (
                 <GPSProvider>
@@ -56,9 +54,7 @@ export function Test() {
                 </GPSProvider>
             )}
             {showAccelerometer && (
-                <DeviceMotionProvider>
-                    <DeviceMotionTable />
-                </DeviceMotionProvider>
+                <DeviceMotionTable />
             )}
         </>
     );

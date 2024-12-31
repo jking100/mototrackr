@@ -13,7 +13,7 @@
 //          every 5 or so seconds because super high resolution not needed for map
 
 //import { useEffect, useState, useRef } from "react";
-import { useDeviceMotion } from "@/components/features/deviceMotion";
+import { useDeviceMotion } from "@/components/features/deviceMotion/useDeviceMotion";
 import { MotorcycleLeanGauge } from "@/components/ui/MotorcycleLeanGauge";
 
 export function LeanAngleWidget(){

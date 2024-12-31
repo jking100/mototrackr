@@ -1,6 +1,6 @@
 //this component must be used within deviceMotionProvider wrapper
 
-import { useDeviceMotion } from "@/components/features/deviceMotion/";
+import { useDeviceMotion } from "@/components/features/deviceMotion/useDeviceMotion";
 
 export function DeviceMotionTable (){
     const {motionData, isAvailable, permissions, errorBox} = useDeviceMotion();
