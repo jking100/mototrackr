@@ -4,6 +4,7 @@ import { LeanAngleWidget } from "@/components/LeanAngleWidget";
 import { GPSWidget } from "@/components/GPSWidget";
 import { GPSProvider } from "@/components/features/geolocation";
 import { useState } from "react";
+import { NavBar } from "@/components/ui/NavBar";
 
 export function Test() {
     const [showLean, setShowLean] = useState(false);
@@ -11,6 +12,7 @@ export function Test() {
     const [showAccelerometer, setShowAccelerometer] = useState(false);
     return (
         <>
+            <NavBar/>
             <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-2">
                     <input

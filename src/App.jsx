@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 
 //my components
-import { NavBar } from "@/components/ui/NavBar";
 import { Home } from "@/pages/Home";
 import { Test } from "@/pages/Test";
 import { Log } from "@/pages/Log";
@@ -15,10 +14,9 @@ import { Results } from "@/pages/Results";
 
 function App() {
   return (
-      <div className="container mx-auto">
-        <div className="overflow-x-hidden min-h-screen w-full max-w-full">
+      <div className="w-full min-h-screen">
+        <div className="h-full w-full">
           <BrowserRouter>
-            <NavBar />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/test" element={ <Test /> } />
