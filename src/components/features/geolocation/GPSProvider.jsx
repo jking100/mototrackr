@@ -3,12 +3,16 @@ import { useEffect, useState } from "react";
 import PropTypes from 'prop-types';
 
 export function GPSProvider({children}) {
+    const [isGPSAvailable, setIsGPSAvailable] = useState(false);
     const [GPSReadings, setGPSReadings] = useState([]);
     const [error, setError] = useState(null);
     
+    useEffect(() => {
+        setIsGPSAvailable("geolocation" in navigator);
+    }, []);//runs on mount once
+    
     const getGPSData = () => {
-
-        const options = {
+            const options = {
             enableHighAccuracy: true,
             maximumAge: 0,
             timeout: 5000
@@ -38,11 +42,11 @@ export function GPSProvider({children}) {
                         break;
                     default:
                         setError(`Unknown error: ${error.message}`);
-                    }
-                },
-                options
-            );
-        };
+                }
+            },
+            options
+        );
+    };
         
     const resetGPSDataLog = () => {
         setGPSReadings([]);
@@ -52,6 +56,7 @@ export function GPSProvider({children}) {
     const GPSContextValues = {
         GPSReadings,
         error,
+        isGPSAvailable,
         getGPSData,
         resetGPSDataLog
     };

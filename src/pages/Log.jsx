@@ -1,7 +1,13 @@
+//import { GPSContext } from "@/components/features/geolocation/GPSContext";
+import { GPSProvider } from "@/components/features/geolocation";
+import { LoggingApplet } from "@/components/LoggingApplet";
+
 export function Log() {
     return (
         <>
-            <h2>This is the &quot;log&quot; page</h2>
+            <GPSProvider>
+                <LoggingApplet />
+            </GPSProvider> 
         </>
     );
 }
