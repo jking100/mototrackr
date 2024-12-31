@@ -1,6 +1,10 @@
 import { useEffect, useState, useRef } from "react";
 
-export function useDeviceMotion(refreshHZ) {
+export function useDeviceMotion(refreshHZ = 50) {
+    // Store last update time for throttling
+    const lastUpdateTime = useRef(0);
+    // Convert Hz to minimum time between updates in ms
+    const minTimeBetweenUpdates = useRef(1000 / refreshHZ);
     const [permissionStatus, setPermissionStatus] = useState(false);
     const [permissionNeeded, setPermissionNeeded] = useState(true);
     const [isAvailable, setIsAvailable] = useState(false);
@@ -22,6 +26,13 @@ export function useDeviceMotion(refreshHZ) {
 
     const initializeDeviceMotion = () => {
         const handleMotion = (event) => {
+            const now = Date.now();
+            // Skip refresh if last refresh was too recent
+            if (now - lastUpdateTime.current < minTimeBetweenUpdates.current) {
+                return;
+            }
+            lastUpdateTime.current = now;
+            
             if (event.accelerationIncludingGravity && event.acceleration) {
                 setMotionData({
                     accelerationIncludingGravity: {
