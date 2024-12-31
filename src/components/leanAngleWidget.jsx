@@ -15,7 +15,6 @@
 //import { useEffect, useState, useRef } from "react";
 import { useDeviceMotion } from "@/components/features/deviceMotion";
 import { MotorcycleLeanGauge } from "@/components/ui/MotorcycleLeanGauge";
-import { useEffect } from "react";
 
 export function LeanAngleWidget(){
     const { motionData, isAvailable, permissionState } = useDeviceMotion();
