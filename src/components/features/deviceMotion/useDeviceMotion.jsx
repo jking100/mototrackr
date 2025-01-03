@@ -1,13 +1,13 @@
 import { useEffect, useState, useRef } from "react";
 
-export function useDeviceMotion(refreshHZ = 50) {
-    // Store last update time for throttling
-    const lastUpdateTime = useRef(0);
-    // Convert Hz to minimum time between updates in ms
-    const minTimeBetweenUpdates = useRef(1000 / refreshHZ);
+export function useDeviceMotion(refreshHZ = 25) {
+    const lastUpdateTime = useRef(0); // Store last update time for throttling
+    const minTimeBetweenUpdates = useRef(1000 / refreshHZ); // Convert Hz to minimum time between updates in ms
+    
     const [permissionStatus, setPermissionStatus] = useState(false);
     const [permissionNeeded, setPermissionNeeded] = useState(true);
     const [isAvailable, setIsAvailable] = useState(false);
+    
     const [motionData, setMotionData] = useState({
         acceleration: {
             x: 0, y: 0, z: 0
@@ -23,7 +23,19 @@ export function useDeviceMotion(refreshHZ = 50) {
             alpha: 0, beta: 0, gamma: 0
         }
     });
-
+    
+    const errorBox = 
+        (permissionStatus !== true && permissionNeeded)
+        ? (
+            <div className="fixed top-4 left-1/2 transform -translate-x-1/2 flex items-center bg-red-100 text-red-700 px-4 py-2 rounded-lg shadow-lg z-50">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            <p>Fatal Error: Sensor access</p>
+            </div>
+        )
+        : null;
+        
     const initializeDeviceMotion = () => {
         const handleMotion = (event) => {
             const now = Date.now();
@@ -36,9 +48,9 @@ export function useDeviceMotion(refreshHZ = 50) {
             if (event.accelerationIncludingGravity && event.acceleration) {
                 setMotionData({
                     accelerationIncludingGravity: {
-                    x: event.accelerationIncludingGravity.x ?? 0,
-                    y: event.accelerationIncludingGravity.y ?? 0,
-                    z: event.accelerationIncludingGravity.z ?? 0,
+                        x: event.accelerationIncludingGravity.x ?? 0,
+                        y: event.accelerationIncludingGravity.y ?? 0,
+                        z: event.accelerationIncludingGravity.z ?? 0,
                     },
                     acceleration: {
                         x: event.acceleration.x ?? 0,
@@ -68,57 +80,56 @@ export function useDeviceMotion(refreshHZ = 50) {
         };
     };
 
+    const askForPerms = async () => {
+        if (permissionStatus === true) {
+            return true;
+        }
+
+        if (permissionNeeded === false) {
+            setPermissionStatus(true);
+            return true;
+        }
+
+        //only browsers/devices with a required request permission method will reach here
+        try {
+            const permission = await DeviceMotionEvent.requestPermission();
+            if (permission === "granted") {
+                setPermissionStatus(true);
+                return true;
+            } else {
+                alert(`Failure in DeviceMotion hook: Failed to get motion permissions - ${permission}`);
+                setPermissionStatus(false);
+                return false;
+            }
+
+        } catch (error) {
+            alert(`Error in DeviceMotion hook: Error requesting DeviceMotion permissions - ${error}`);
+            setPermissionStatus(false);
+            return false;
+        }
+    };
+
+    //(mount effect) initialize our motion api status variable in here
     useEffect(() => {
         // First, check if the device supports motion events
         if (!window.DeviceMotionEvent) {
+            alert("!!!FATAL ERROR!!!: Your device appears to not have/support access to required sensors for this app");
             return;
         }
+
         setIsAvailable(true);
-
-        const motionInit = async () => {
-            const requestPerms = async () => {
-                if (typeof DeviceMotionEvent.requestPermission === 'function') {
-                    try {
-                        const permission = await DeviceMotionEvent.requestPermission();
-                        setPermissionStatus(permission);
-                        return permission;
-                    } catch (error) {
-                        alert('Error requesting device motion permission:', error);
-                        setPermissionStatus('denied');
-                        return "denied";
-                    }
-                }
-            };
-
-            if (typeof DeviceMotionEvent.requestPermission === 'function') {
-                setPermissionNeeded(true);
-                const response = await requestPerms();
-
-                await response === "granted" 
-                    ? initializeDeviceMotion() 
-                    : alert("Failed to start motion listener. Please restart browser.");
-            } else {
-                setPermissionNeeded(false);
-                initializeDeviceMotion();
-            }
-
-        };
-
-        motionInit();
-
+        setPermissionNeeded(
+            typeof DeviceMotionEvent.requestPermission === 'function'
+        );
     }, []);
 
-    const errorBox = 
-        (permissionStatus !== "granted" && permissionNeeded)
-        ? (
-            <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 flex items-center bg-red-100 text-red-700 px-4 py-2 rounded-lg shadow-lg z-50">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-            </svg>
-            <p>Error: Sensor access, Please restart browser</p>
-            </div>
-        )
-        : null;
+    //initialize deviceMotion event handling once granted permissions
+    useEffect(()=>{
+        if (permissionStatus === true) {
+            initializeDeviceMotion();
+        }
+    },[permissionStatus]);
 
-    return {motionData, isAvailable, permissionStatus, errorBox};
+
+    return {motionData, isAvailable, permissionStatus, errorBox, askForPerms};
 }
