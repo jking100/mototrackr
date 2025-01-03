@@ -1,5 +1,5 @@
 import { DeviceMotionTable } from "@/components/DeviceMotionTable";
-import { LeanAngleWidget } from "@/components/LeanAngleWidget";
+import { LeanAngleWidget } from "@/components/widgets/leanAngleWidget";
 import { GPSWidget } from "@/components/GPSWidget";
 import { LoggerContext } from "@/components/motoLeanApp/LoggerContext";
 import { NavBar } from "@/components/ui/NavBar";
