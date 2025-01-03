@@ -1,18 +1,42 @@
 import { GPSContext } from "./GPSContext";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import PropTypes from 'prop-types';
+import { useDeviceMotion } from "@/components/features/deviceMotion/useDeviceMotion";
 
 export function GPSProvider({children}) {
     const [isGPSAvailable, setIsGPSAvailable] = useState(false);
     const [GPSReadings, setGPSReadings] = useState([]);
+    const [LeanReadings, setLeanReadings] = useState([]);
     const [error, setError] = useState(null);
-    
+
+    const {motionData, isAvailable: isMotionAvailable, permissionStatus: motionPermissionStatus, errorBox: motionErrorBox} = useDeviceMotion(5);
+
     useEffect(() => {
         setIsGPSAvailable("geolocation" in navigator);
     }, []);//runs on mount once
+
+    //add current lean to latest gps reading as the gps readings list expands
+    useEffect(() => {
+        if (GPSReadings.length > 0) {
+            const latestIndex = GPSReadings.length - 1;
+            const latestReading = GPSReadings[latestIndex];
+            
+            // Only update if we haven't added lean data yet
+            if (!latestReading.lean) {
+                const updatedReadings = [...GPSReadings];
+                updatedReadings[latestIndex] = {
+                    ...latestReading,
+                    lean: motionData.tilt.flatYaxis.toFixed(1)
+                };
+                setGPSReadings(updatedReadings);
+                //alert(JSON.stringify(updatedReadings));
+            }
+        }
+    }, [GPSReadings, motionData.tilt.flatYaxis]);
     
     const getGPSData = () => {
-            const options = {
+        
+        const options = {
             enableHighAccuracy: true,
             maximumAge: 0,
             timeout: 5000
@@ -21,13 +45,13 @@ export function GPSProvider({children}) {
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 const reading = {
+                    time: Date.now(),
+                    timestamp: new Date().toLocaleTimeString(),
                     latitude: position.coords.latitude,
                     longitude: position.coords.longitude,
-                    accuracy: position.coords.accuracy,
-                    timestamp: new Date().toLocaleTimeString()
+                    accuracy: position.coords.accuracy
                 };
                 setGPSReadings(prev => [...prev, reading]);
-                setError(null);
             },
             (error) => {
                 switch(error.code) {
@@ -54,11 +78,17 @@ export function GPSProvider({children}) {
     };
         
     const GPSContextValues = {
+        // GPS data
         GPSReadings,
         error,
         isGPSAvailable,
         getGPSData,
-        resetGPSDataLog
+        resetGPSDataLog,
+        // Motion data
+        motionData,
+        isMotionAvailable,
+        motionPermissionStatus,
+        motionErrorBox
     };
 
     return (
