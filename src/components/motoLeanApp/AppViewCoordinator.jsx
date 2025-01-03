@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { LoggerProvider } from "@/components/motoLeanApp/LoggerProvider";
+
 import AppHome from "./AppHome";
 import AppInstructions from "./AppInstructions";
 import AppRecord from "./AppRecord";
@@ -75,7 +77,9 @@ export default function AppViewCoordinator () {
 
     return (
         <div>
-            {renderCurrentView()}
+            <LoggerProvider>
+                {renderCurrentView()}
+            </LoggerProvider>
         </div>
     );
 }
