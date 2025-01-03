@@ -21,6 +21,7 @@ export function LoggingApplet() {
             //console.log("hello");
             // Set up interval for GPS logging
             intervalId = setInterval(() => {
+                alert("Calling gpsData");
                 GPSData.getGPSData();
             }, 5000); // Log every 5 seconds
         }
@@ -77,7 +78,10 @@ export function LoggingApplet() {
                 <div className="card bg-base-100 shadow-xl">
                     <div className="card-body">
                         <h2 className="card-title">Recording in Progress</h2>
-                        <LeanAngleWidget/>
+                        {/* Pass the lean angle from most recent GPS reading, which comes from motionData.tilt.flatYaxis in GPSProvider */}
+                        <LeanAngleWidget 
+                            leanAngle={GPSData.motionData ? GPSData.motionData.tilt.flatYaxis : -66}
+                        />
                         
                         <div className="mt-4">
                             <p>Latest Reading:</p>
@@ -96,15 +100,16 @@ export function LoggingApplet() {
                 </div>
             )}
 
-            {flow === "submit" && isLoggingComplete && (
+            {GPSData.GPSReadings.length > 0 && (
                 <div className="card bg-base-100 shadow-xl">
                     <div className="card-body">
-                        <h2 className="card-title mb-4">Logging Complete</h2>
+                        <h2 className="card-title mb-4">Data Captured:</h2>
                         <div className="overflow-x-auto">
                             <table className="table table-zebra w-full">
                                 <thead>
                                     <tr>
                                         <th>Time</th>
+                                        <th>Lean</th>
                                         <th>Latitude</th>
                                         <th>Longitude</th>
                                         <th>Accuracy (m)</th>
@@ -114,6 +119,7 @@ export function LoggingApplet() {
                                     {GPSData.GPSReadings.map((reading, index) => (
                                         <tr key={index}>
                                             <td>{reading.timestamp}</td>
+                                            <td>{reading.lean}</td>
                                             <td>{reading.latitude.toFixed(6)}</td>
                                             <td>{reading.longitude.toFixed(6)}</td>
                                             <td>{reading.accuracy.toFixed(1)}</td>
