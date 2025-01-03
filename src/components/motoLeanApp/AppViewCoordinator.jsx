@@ -19,30 +19,57 @@ export default function AppViewCoordinator () {
     const [currentView, setCurrentView] = useState(appViews.HOME);
     const navigate = useNavigate();
 
+    const navigationHandlers = {
+        goToHome: () => setCurrentView(appViews.HOME),
+        goToInstructions: () => setCurrentView(appViews.INSTRUCTIONS),
+        goToRecord: () => setCurrentView(appViews.RECORD),
+        goToResults: () => setCurrentView(appViews.RESULTS),
+        goToSubmit: () => setCurrentView(appViews.SUBMIT),
+        goToDBRecords: () => navigate("/results")
+    };
+
     const renderCurrentView = () => {
         switch(currentView) {
             case appViews.HOME:
                 return (
-                    <AppHome />
+                    <AppHome 
+                        onStart={navigationHandlers.goToInstructions}
+                        onViewResults={navigationHandlers.goToDBRecords}
+                    />
                 );
             case appViews.INSTRUCTIONS:
                 return (
-                    <AppInstructions />
+                    <AppInstructions 
+                        onStartRide={navigationHandlers.goToRecord}
+                    />
                 );
             case appViews.RECORD:
                 return (
-                    <AppRecord />
+                    <AppRecord 
+                        onEndRide={navigationHandlers.goToResults}
+                    />
                 );
             case appViews.RESULTS:
                 return (
-                    <AppResults />
+                    <AppResults 
+                        onHome={navigationHandlers.goToHome}
+                        onSubmitRide={navigationHandlers.goToSubmit}
+                    />
                 );
             case appViews.SUBMIT:
                 return (
-                    <AppSubmit />
+                    <AppSubmit 
+                        onHome={navigationHandlers.goToHome}
+                        onSubmitRideToDB={navigationHandlers.goToDBRecords}
+                    />
                 );
-        
-        
+            default:
+                return (
+                    <AppHome 
+                        onStart={navigationHandlers.goToInstructions}
+                        onViewResults={navigationHandlers.goToDBRecords}
+                    />
+                );
         }
     };
 
