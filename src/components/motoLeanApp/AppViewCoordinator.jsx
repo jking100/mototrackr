@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { LoggerProvider } from "@/components/motoLeanApp/LoggerProvider";
+import { LoggerProvider } from "./LoggerProvider";
 
 import AppHome from "./AppHome";
 import AppInstructions from "./AppInstructions";
