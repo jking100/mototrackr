@@ -1,9 +1,6 @@
-//this component must be used within deviceMotionProvider wrapper
+import PropTypes from 'prop-types';
 
-import { useDeviceMotion } from "@/components/features/deviceMotion/useDeviceMotion";
-
-export function DeviceMotionTable (){
-    const {motionData, isAvailable, permissions, errorBox} = useDeviceMotion();
+export function DeviceMotionTable ({motionData}){
 
     return (
         <div className="grid gap-6">
@@ -61,7 +58,11 @@ export function DeviceMotionTable (){
                         </div>
                     </div>
                 </div>
-            {errorBox}
         </div>
     );
+};
+
+DeviceMotionTable.propTypes = {
+    //children can be any valid react node
+    motionData : PropTypes.object
 };

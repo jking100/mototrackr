@@ -1,9 +1,10 @@
-import { GPSContext } from "./GPSContext";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from 'prop-types';
+
+import { LoggerContext } from "./LoggerContext";
 import { useDeviceMotion } from "@/components/features/deviceMotion/useDeviceMotion";
 
-export function GPSProvider({children}) {
+export function LoggerProvider({children}) {
     const [isGPSAvailable, setIsGPSAvailable] = useState(false);
     const [GPSReadings, setGPSReadings] = useState([]);
     const [LeanReadings, setLeanReadings] = useState([]);
@@ -77,7 +78,7 @@ export function GPSProvider({children}) {
         setError([]);
     };
         
-    const GPSContextValues = {
+    const LoggerContextValues = {
         // GPS data
         GPSReadings,
         error,
@@ -92,13 +93,13 @@ export function GPSProvider({children}) {
     };
 
     return (
-            <GPSContext.Provider value={GPSContextValues}>
+            <LoggerContext.Provider value={LoggerContextValues}>
                 {children}    
-            </GPSContext.Provider>      
+            </LoggerContext.Provider>      
     );
 };
 
-GPSProvider.propTypes = {
+LoggerProvider.propTypes = {
     //children can be any valid react node
     children : PropTypes.node.isRequired
 };

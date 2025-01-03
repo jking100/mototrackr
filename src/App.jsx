@@ -12,6 +12,8 @@ import { Test } from "@/pages/Test";
 import { Log } from "@/pages/Log";
 import { Results } from "@/pages/Results";
 
+import { GPSProvider } from "@/components/features/geolocation";
+
 function App() {
   return (
       <div className="w-full min-h-screen">
@@ -19,7 +21,7 @@ function App() {
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/test" element={ <Test /> } />
+              <Route path="/test" element={ <GPSProvider><Test /></GPSProvider> } />
               <Route path="/log" element={ <Log /> }/>
               <Route path="/results" element={ <Results /> }/>
             </Routes>
