@@ -13,6 +13,6 @@ export function LeanAngleWidget({motionData}){
 }
 
 LeanAngleWidget.propTypes = {
-    //children can be any valid react node
+    //children can be any valid react object
     motionData : PropTypes.object
 };
