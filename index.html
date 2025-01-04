@@ -2,12 +2,16 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <!-- below meta tags configure the page width and statusbar color on mobile
-    <meta name="theme-color" content="#64748b">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover" />
-    -->
+    <!--https://uxwing.com/-->
+    <link rel="icon" type="image/png" href="public/motorcycleicon512x512.png" />
+    <!-- below meta tag handles statusbar color on mobile
+      this should probably match index.css background colors to make it feel more fullscreen
+      -->
+    <meta name="theme-color" content="#afafaf">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!--linking the pwa manifest-->
+    <link rel="manifest" href="manifest.json" />
 
     <title>MotoTrackr</title>
   </head>
@@ -16,3 +20,5 @@
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
+
+
