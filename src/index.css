@@ -10,7 +10,6 @@
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -27,25 +26,18 @@ a:hover {
 }
 
 html {
-  height: -webkit-fill-available;
+  /*height: -webkit-fill-available;*/
 }
 
 body {
   margin: 0;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   /* Mobile viewport height fix */
-  min-height: -webkit-fill-available;
-  /* Prevent unwanted touch behaviors */
-  touch-action: manipulation;
-  
-  background-color: #c2c3c4; /* Your desired color */
-  /* Safe area insets for notched devices */
-    /* Ensure content doesn't get hidden */
-  /*padding-top: env(safe-area-inset-top);*/
-  padding-left: env(safe-area-inset-left);
-  padding-right: env(safe-area-inset-right);
+  /*min-height: -webkit-fill-available;*/
+  /*Prevent unwanted touch behaviors*/
+  touch-action: none;
 }
 
 h1 {
@@ -74,8 +66,10 @@ button:focus-visible {
 
 @media (prefers-color-scheme: light) {
   :root {
+    
     color: #213547;
-    background-color: #c0c0c0;
+    /*this colors main page card*/
+    background-color: #afafaf;
   }
   a:hover {
     color: #747bff;
