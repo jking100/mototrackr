@@ -86,40 +86,42 @@ export function LoggerProvider({children}) {
 
     const DiagnosticsDisplay = () => {
         return (
-            <div className="bg-gray-100 p-4 rounded-lg">
-                <h2 className="text-xl font-bold mb-4">Diagnostic Info</h2>
-                
-                {/* Motion Status Section */}
-                <div className="mb-6">
-                    <h3 className="text-lg font-semibold mb-2">Motion Status</h3>
-                    <div className="space-y-2 text-base">
-                        <p>Available: {isMotionAvailable ? '✅' : '❌'}</p>
-                        <p>Permission: {motionPermissionStatus}</p>
-                        {motionErrorBox && (
-                            <p className="text-red-600">{motionErrorBox}</p>
+            <div className="card w-full bg-base-100 shadow-xl">
+                <div className="card-body">
+                    <h2 className="card-title text-2xl font-bold">Diagnostic Info</h2>
+                    
+                    {/* Motion Status Section */}
+                    <div className="mb-4">
+                        <h3 className="text-xl font-semibold mb-2">Motion Status</h3>
+                        <div className="space-y-2 text-base-content">
+                            <p>Available: {isMotionAvailable ? '✅' : '❌'}</p>
+                            <p>Permission: {motionPermissionStatus ? '✅' : '❌'}</p>
+                            {motionErrorBox && (
+                                <p className="text-error">{motionErrorBox}</p>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Motion Data Section */}
+                    <div className="mb-4">
+                        <h3 className="text-xl font-semibold mb-2">Motion Data</h3>
+                        <pre className="bg-base-300 text-base-content p-4 overflow-auto">
+                            {JSON.stringify(motionData, null, 2)}
+                        </pre>
+                    </div>
+
+                    {/* GPS Section */}
+                    <div>
+                        <h3 className="text-xl font-semibold mb-2">
+                            GPS Data {isGPSAvailable ? '✅' : '❌'}
+                        </h3>
+                        <pre className="bg-base-300 text-base-content p-4 overflow-auto">
+                            {JSON.stringify(GPSReadings, null, 2)}
+                        </pre>
+                        {error && (
+                            <p className="text-error mt-2">{error}</p>
                         )}
                     </div>
-                </div>
-
-                {/* Motion Data Section */}
-                <div className="mb-6">
-                    <h3 className="text-lg font-semibold mb-2">Motion Data</h3>
-                    <pre className="bg-white p-2 rounded overflow-auto max-h-48 text-sm">
-                        {JSON.stringify(motionData, null, 2)}
-                    </pre>
-                </div>
-
-                {/* GPS Section */}
-                <div>
-                    <h3 className="text-lg font-semibold mb-2">
-                        GPS Data {isGPSAvailable ? '✅' : '❌'}
-                    </h3>
-                    <pre className="bg-white p-2 rounded overflow-auto max-h-48 text-sm">
-                        {JSON.stringify(GPSReadings, null, 2)}
-                    </pre>
-                    {error && (
-                        <p className="text-red-600 mt-2">{error}</p>
-                    )}
                 </div>
             </div>
         );
