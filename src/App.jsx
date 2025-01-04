@@ -16,8 +16,8 @@ import { GPSProvider } from "@/components/features/geolocation";
 
 function App() {
   return (
-      <div className="w-full min-h-screen">
-        <div className="h-full w-full">
+      <div className="">
+        <div>
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Home />} />
