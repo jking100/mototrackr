@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import PropTypes from 'prop-types';
 
 import { LoggerContext } from "./LoggerContext";
@@ -7,7 +7,7 @@ import { useDeviceMotion } from "@/components/features/deviceMotion/useDeviceMot
 export function LoggerProvider({children}) {
     const [isGPSAvailable, setIsGPSAvailable] = useState(false);
     const [GPSReadings, setGPSReadings] = useState([]);
-    const [LeanReadings, setLeanReadings] = useState([]);
+    //const [LeanReadings, setLeanReadings] = useState([]);
     const [error, setError] = useState(null);
 
     const {
@@ -46,7 +46,7 @@ export function LoggerProvider({children}) {
         const options = {
             enableHighAccuracy: true,
             maximumAge: 0,
-            timeout: 5000
+            timeout: 4000
         };
         
         navigator.geolocation.getCurrentPosition(
@@ -89,6 +89,13 @@ export function LoggerProvider({children}) {
             <div className="card w-full bg-base-100 shadow-xl">
                 <div className="card-body">
                     <h2 className="card-title text-2xl font-bold">Diagnostic Info</h2>
+
+                    <div className="mb-4">
+                        <h3 className="text-xl font-semibold mb-2">App Status</h3>
+                        <div className="space-y-2 text-base-content">
+                            <p>Logging: {isLogging ? '✅' : '❌'}</p>
+                        </div>
+                    </div>
                     
                     {/* Motion Status Section */}
                     <div className="mb-4">
@@ -126,17 +133,44 @@ export function LoggerProvider({children}) {
             </div>
         );
     };
-        
+
+    const [isLogging, setIsLogging] = useState(false);
+    const loggingIntervalId = useRef(null);
+    
+    //used for starting and stopping logging based on isLogging
+    useEffect(() => {
+        if ( isLogging ) {
+            loggingIntervalId.current = setInterval(() => {
+                getGPSData();
+            }, 5000);
+        }
+
+        return () => {
+            if (loggingIntervalId.current) {
+                clearInterval(loggingIntervalId.current);
+                loggingIntervalId.current = null;
+            }
+        };
+    }, [isLogging]);
+
+    const startLogging = () => setIsLogging(true);
+
+    const stopLogging = () => setIsLogging(false);
+
     const LoggerContextValues = {
+        isLogging,
+        //external control methods
+        startLogging,
+        stopLogging,
+        resetGPSDataLog,
+        motionAskForPerms,
         // GPS data
         GPSReadings,
         error,
         isGPSAvailable,
         getGPSData,
-        resetGPSDataLog,
         // Motion data
         motionData,
-        motionAskForPerms,
         isMotionAvailable,
         motionPermissionStatus,
         motionErrorBox,
