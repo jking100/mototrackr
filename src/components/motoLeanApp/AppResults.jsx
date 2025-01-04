@@ -10,7 +10,9 @@ export default function AppResults ({onHome, onSubmitRide}) {
     const getMaxLeanLeft = () => {
         let maxLeanLeft = 0;
         for (let i = 0; i < Logger.GPSReadings.length; i++) {
-            Logger.GPSReadings[i].lean < maxLeanLeft ? maxLeanLeft = Logger.GPSReadings[i].lean : null;
+            if (+Logger.GPSReadings[i].lean < maxLeanLeft) {
+                maxLeanLeft = Logger.GPSReadings[i].lean;
+            }
         }
         return Math.round(-maxLeanLeft);
     };
@@ -18,7 +20,9 @@ export default function AppResults ({onHome, onSubmitRide}) {
     const getMaxLeanRight = () => {
         let maxLeanRight = 0;
         for (let i = 0; i < Logger.GPSReadings.length; i++) {
-            Logger.GPSReadings[i].lean > maxLeanRight ? maxLeanRight = Logger.GPSReadings[i].lean : null;
+            if (+Logger.GPSReadings[i].lean > maxLeanRight) {
+                maxLeanRight = Logger.GPSReadings[i].lean;
+            }        
         }
         return Math.round(maxLeanRight);
     };
