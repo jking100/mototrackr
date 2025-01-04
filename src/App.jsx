@@ -1,5 +1,5 @@
 //UI Components - https://daisyui.com/components/
-import "./App.css";
+//import "./App.css";
 import {
   BrowserRouter,
   Routes,
