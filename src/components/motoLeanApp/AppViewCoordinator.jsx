@@ -76,7 +76,7 @@ export default function AppViewCoordinator () {
     };
 
     return (
-        <div>
+        <div className="h-dvh overflow-x-hidden overflow-y-auto">
             <LoggerProvider>
                 {renderCurrentView()}
             </LoggerProvider>
