@@ -16,9 +16,9 @@ export default function AppInstructions({onStartRide}) {
                     </div>
 
                     <div className="flex flex-col items-center gap-4 mb-6">
-                        <div className="rotate-90 text-5xl">📱</div>
+                        <div className="-rotate-90 text-5xl">📱</div>
                         <div className="flex flex-col items-center gap-2">
-                            <div className="badge badge-primary badge-lg">Step 2</div>
+                            <div className="badge badge-lg">Step 2</div>
                             <p className="font-semibold text-center">Ensure camera is on the left side</p>
                         </div>
                     </div>
