@@ -12,7 +12,9 @@ export const MotorcycleLeanGauge = ({
   }) => {
     
     return (
-        <GaugeComponent
+        <div className="flex items-center justify-center">
+          <GaugeComponent
+          style={{ width: '100%' }}
           type="semicircle"
           minValue={-maxAngle}
           maxValue={maxAngle}
@@ -105,10 +107,8 @@ export const MotorcycleLeanGauge = ({
               }
             }
           }}
-          
-          // Container style
-          style={{ width: 400 }}
         />
+        </div>
       );
     };
 
