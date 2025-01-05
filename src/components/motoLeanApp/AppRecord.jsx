@@ -29,7 +29,7 @@ export default function AppRecord({ onEndRide }) {
 
   return (
     <>
-      <GaugeDashboard />
+      <GaugeDashboard onEndRide={onEndRide}/>
       <div className="p-4">
         <LeanAngleWidget motionData={Logger.motionData} />
 
