@@ -157,6 +157,25 @@ export function LoggerProvider({children}) {
 
     const stopLogging = () => setIsLogging(false);
 
+    const maxLeanRight = () => {
+        if (GPSReadings.length > 0) {
+          const max = Math.max(...GPSReadings.map(r => (r.lean)));
+          if(max > 0) {
+            return max.toFixed(0);
+          }
+        }
+        return 0;
+      };
+      const maxLeanLeft = () => {
+        if (GPSReadings.length > 0) {
+          const min = Math.min(...GPSReadings.map(r => (r.lean)));
+          if(min < 0) {
+            return Math.abs(min.toFixed(0));
+          }
+        }
+        return 0;
+      };
+
     const LoggerContextValues = {
         isLogging,
         //external control methods
@@ -174,6 +193,8 @@ export function LoggerProvider({children}) {
         isMotionAvailable,
         motionPermissionStatus,
         motionErrorBox,
+        maxLeanRight,
+        maxLeanLeft,
         //diagnostics
         DiagnosticsDisplay
     };
