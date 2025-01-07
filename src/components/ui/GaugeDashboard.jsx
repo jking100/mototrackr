@@ -24,14 +24,12 @@ export function GaugeDashboard({ onEndRide }) {
     return 0;
   };
 
-  
-  
   const elapsedTimeStat = (
     <div className="card size-full bg-base-300 items-center justify-center">
       <div className="card-title">{elapsedTime()}s</div>
     </div>
   );
-  
+
   const maxSpeedStat = elapsedTimeStat;
 
   const readingsCountStat = (
@@ -101,12 +99,12 @@ export function GaugeDashboard({ onEndRide }) {
 
   const mainCluster = () => {
     return (
-      <div className="flex flex-row portrait:flex-col size-full items-center justify-center">
-        <div className="portrait:hidden w-1/6 portrait:w-1/3 flex items-center justify-center">
+      <div className="h-full flex flex-row portrait:flex-col items-center justify-center gap-2">
+        <div className="card bg-base-content/20 portrait:hidden w-1/6 h-full portrait:w-1/3 flex items-center justify-center">
           {maxLeftStat}
         </div>
         <div
-          className="card bg-base-300 w-full portrait:w-full portrait:order-first flex items-center justify-center"
+          className="card size-full bg-base-300 portrait:w-full portrait:order-first"
           onClick={() => setMainPanelDisplay(!mainPanelDisplay)}
         >
           {mainPanelDisplay && (
@@ -118,7 +116,7 @@ export function GaugeDashboard({ onEndRide }) {
             </div>
           )}
         </div>
-        <div className="portrait:hidden w-1/6 portrait:w-1/3 flex items-center justify-center">
+        <div className="card  bg-base-content/20 portrait:hidden w-1/6 h-full portrait:w-1/3 flex items-center justify-center">
           {maxRightStat}
         </div>
         <div className="landscape:hidden flex flex-row size-full justify-around">
@@ -134,58 +132,62 @@ export function GaugeDashboard({ onEndRide }) {
   };
 
   return (
-    <div className="h-dvh w-dvw content-center">
-      <div className="landscape:hidden card bg-warning items-center p-4 m-2">
-        <div className="card-title text-center">
-          Optimized for use in landscape mode
+    <div className="h-dvh w-dvw content-center p-2">
+      <div className="card size-full justify-center bg-base-200">
+        <div className="landscape:hidden card bg-warning items-center p-2 mb-2">
+          <div className="card-title text-center text-warning-content">
+            Optimized for use in landscape mode
+          </div>
         </div>
-      </div>
-      <div className="flex flex-col landscape:h-dvh">
-        <div className="h-4/5">{mainCluster()}</div>
+        <div className="flex flex-col size-full">
+          <div className="h-4/5">{mainCluster()}</div>
+          <div className="h-1/5 *:p-1">
+            <div className="flex flex-row portrait:flex-col size-full">
+              <div className="basis-1/6 p-1 flex items-center justify-center">
+                {!Logger.isLogging && Logger.GPSReadings.length > 0 && (
+                  <button
+                    onClick={() => Logger.resetGPSDataLog()}
+                    className="btn btn-error size-full"
+                  >
+                    Reset
+                  </button>
+                )}
+              </div>
+              <div className="basis-1/6 p-1 flex items-center justify-center">
+                {maxSpeedStat}
+              </div>
+              <div className="basis-1/3 p-1 flex items-center justify-center">
+                {!Logger.isLogging && Logger.GPSReadings.length === 0 && (
+                  <button
+                    onClick={() => Logger.startLogging()}
+                    className="btn btn-primary size-full"
+                  >
+                    Start Logging Ride
+                  </button>
+                )}
 
-        <div className="h-1/5">
-          <div className="flex flex-row portrait:flex-col size-full">
-            <div className="basis-1/6 p-1 flex items-center justify-center">
-              {(!Logger.isLogging && Logger.GPSReadings.length > 0) && (
-                <button
-                  onClick={() => Logger.resetGPSDataLog()}
-                  className="btn btn-error size-full"
-                >
-                  Reset
-                </button>
-              )}
-            </div>
-            <div className="basis-1/6 p-1 flex items-center justify-center">
-              {maxSpeedStat}
-            </div>
-            <div className="basis-1/3 p-1 flex items-center justify-center">
-              {!Logger.isLogging && Logger.GPSReadings.length === 0 && (
-                <button
-                  onClick={() => Logger.startLogging()}
-                  className="btn btn-primary size-full"
-                >
-                  Start Logging Ride
-                </button>
-              )}
-
-              {Logger.isLogging && (
-                <button
-                  onClick={() => Logger.stopLogging()}
-                  className="btn btn-warning size-full"
-                >
-                  Stop Logging Ride
-                </button>
-              )}
-            </div>
-            <div className="basis-1/6 p-1 flex items-center justify-center">
-              {elapsedTimeStat}
-            </div>
-            <div className="basis-1/6 p-1 flex items-center justify-center">
-              {(!Logger.isLogging && Logger.GPSReadings.length > 0) && (
-                <button onClick={onEndRide} className="btn btn-info size-full">
-                  View Ride Stats
-                </button>
-              )}
+                {Logger.isLogging && (
+                  <button
+                    onClick={() => Logger.stopLogging()}
+                    className="btn btn-warning size-full"
+                  >
+                    Stop Logging Ride
+                  </button>
+                )}
+              </div>
+              <div className="basis-1/6 p-1 flex items-center justify-center">
+                {elapsedTimeStat}
+              </div>
+              <div className="basis-1/6 p-1 flex items-center justify-center">
+                {!Logger.isLogging && Logger.GPSReadings.length > 0 && (
+                  <button
+                    onClick={onEndRide}
+                    className="btn btn-info size-full"
+                  >
+                    View Ride Stats
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -197,25 +199,3 @@ export function GaugeDashboard({ onEndRide }) {
 GaugeDashboard.propTypes = {
   onEndRide: PropTypes.func.isRequired,
 };
-
-/* Original grid layout implementation
-return (
-  <div className="card bg-base-200 h-dvh sm:h-1/2 grid grid-cols-5 grid-rows-3 gap-2 p-2">
-    <div className="card bg-base-300 row-span-2">{maxLeftStat}</div>
-    <div className="card bg-base-300 col-span-3 row-span-2">
-      <MotorcycleLeanGauge leanAngle={Logger.motionData.tilt.flatYaxis} />
-    </div>
-    <div className="card bg-base-300 row-span-2 col-start-5">
-      {maxRightStat}
-    </div>
-    <div className="card bg-base-300 row-start-3">
-    </div>
-    <div className="card bg-base-300 col-span-3 row-start-3 flex flex-row gap-2">
-      <div className="card bg-red-500 w-1/4">{elapsedTimeStat}</div>
-      <div className="w-1/2">{controlButtons}</div>
-      <div className="card bg-red-500 w-1/4">{readingsCountStat}</div>
-    </div>
-    <div className="card bg-base-300 col-start-5 row-start-3">6</div>
-  </div>
-);
-*/
