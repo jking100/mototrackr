@@ -1,13 +1,20 @@
 import { useEffect, useState, useRef } from "react";
 
 export function useDeviceMotion(refreshHZ = 25) {
+    const avg = arr => arr.reduce((acc,v,i,a)=>(acc+v/a.length),0);
+
     const lastUpdateTime = useRef(0); // Store last update time for throttling
     const minTimeBetweenUpdates = useRef(1000 / refreshHZ); // Convert Hz to minimum time between updates in ms
     
     const [permissionStatus, setPermissionStatus] = useState(false);
     const [permissionNeeded, setPermissionNeeded] = useState(true);
     const [isAvailable, setIsAvailable] = useState(false);
-    const rollingAverage5 = useRef([0,0,0,0,0]);
+    const avg15value = useRef(0);
+    const rollingAverage15 = useRef([
+        0,0,0,0,0,
+        0,0,0,0,0,
+        0,0,0,0,0
+    ]);
     
     const [motionData, setMotionData] = useState({
         acceleration: {
@@ -18,7 +25,8 @@ export function useDeviceMotion(refreshHZ = 25) {
         },
         tilt: {
             //measures tilt in the y axis with phone flat (will not work if vertical)
-            flatYaxis: 0
+            flatYaxis: 0,
+            flatY15Avg: 0
         },
         rotationRate: {
             alpha: 0, beta: 0, gamma: 0
@@ -45,16 +53,22 @@ export function useDeviceMotion(refreshHZ = 25) {
                 return;
             }
             lastUpdateTime.current = now;
-
-            //alert(`str: ${rollingAverage5.current}`);
-            rollingAverage5.current.unshift((Math.atan(event.accelerationIncludingGravity.y/event.accelerationIncludingGravity.z) * (180 / Math.PI)).toFixed(1));
-            rollingAverage5.current.pop();
-            const avg = arr => arr.reduce((acc,v,i,a)=>(acc+v/a.length),0);
-            const avg5 = avg(rollingAverage5.current);
-            //alert(`end: ${rollingAverage5.current} : ${avg5}`);
-
             
             if (event.accelerationIncludingGravity && event.acceleration) {
+                //alert("handling motion");
+                const leanY = Math.atan(event.accelerationIncludingGravity.y/event.accelerationIncludingGravity.z) * (180 / Math.PI);
+                avg15value.current = avg(rollingAverage15);
+                if (( leanY > avg15value.current + 15) || (leanY > avg15value.current * 2)) {
+                    //spike reading
+                    rollingAverage15.unshift(avg15value.current * 2);
+                    rollingAverage15.pop();
+                } else {
+                    //good reading
+                    rollingAverage15.unshift(leanY * 2);
+                    rollingAverage15.pop();
+                }
+                avg15value.current = (avg(rollingAverage15));
+
                 setMotionData({
                     accelerationIncludingGravity: {
                         x: event.accelerationIncludingGravity.x ?? 0,
@@ -72,7 +86,7 @@ export function useDeviceMotion(refreshHZ = 25) {
                         //even without calibration seems to be very accurate, i suspect do to not relying on an assumption
                         //that the sensor will read the full force of gravity at rest (no hard coded G=-9.8...)
                         flatYaxis: Math.atan(event.accelerationIncludingGravity.y/event.accelerationIncludingGravity.z) * (180 / Math.PI),
-                        flatY5Avg: avg5.toFixed(0)
+                        flatY15Avg: avg15value.current.toFixed(0)
                     },
                     rotationRate: {
                     alpha: event.rotationRate?.alpha ?? 0,

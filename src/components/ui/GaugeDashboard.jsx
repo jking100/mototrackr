@@ -106,7 +106,7 @@ export function GaugeDashboard({ onEndRide }) {
             <div className="stat">
               <div className="stat-title">Smooth:</div>
               <div className="stat-value text-center">
-                {Logger.motionData.tilt.flatY5Avg}°
+                {Logger.motionData.tilt.flatY15Avg}°
               </div>
             </div>
           </div>
