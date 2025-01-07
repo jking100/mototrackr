@@ -6,10 +6,10 @@ export default function AppHome({ onStart, onViewResults }) {
   const Logger = useContext(LoggerContext);
 
   return (
-    <div className="flex min-h-dvh items-center">
-      <div className="card bg-base-300 ml-2 mr-2 shadow-2xl">
+    <div className="flex h-dvh items-center p-2">
+      <div className="card bg-base-300 shadow-2xl">
         <div className="card-body">
-          <h1 className="card-title text-4xl font-bold justify-center mb-4">
+          <h1 className="card-title text-4xl font-bold justify-center mb-2">
             MotoTrackr
           </h1>
 
