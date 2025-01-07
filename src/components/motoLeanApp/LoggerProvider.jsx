@@ -86,7 +86,7 @@ export function LoggerProvider({children}) {
 
     const DiagnosticsDisplay = () => {
         return (
-            <div className="card w-full bg-base-100 shadow-xl">
+            <div className="card overflow-y-auto bg-base-100">
                 <div className="card-body">
                     <h2 className="card-title text-2xl font-bold">Diagnostic Info</h2>
 
