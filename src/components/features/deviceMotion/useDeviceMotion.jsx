@@ -7,6 +7,7 @@ export function useDeviceMotion(refreshHZ = 25) {
     const [permissionStatus, setPermissionStatus] = useState(false);
     const [permissionNeeded, setPermissionNeeded] = useState(true);
     const [isAvailable, setIsAvailable] = useState(false);
+    const rollingAverage5 = useRef([0,0,0,0,0]);
     
     const [motionData, setMotionData] = useState({
         acceleration: {
@@ -44,6 +45,14 @@ export function useDeviceMotion(refreshHZ = 25) {
                 return;
             }
             lastUpdateTime.current = now;
+
+            //alert(`str: ${rollingAverage5.current}`);
+            rollingAverage5.current.unshift((Math.atan(event.accelerationIncludingGravity.y/event.accelerationIncludingGravity.z) * (180 / Math.PI)).toFixed(1));
+            rollingAverage5.current.pop();
+            const avg = arr => arr.reduce((acc,v,i,a)=>(acc+v/a.length),0);
+            const avg5 = avg(rollingAverage5.current);
+            //alert(`end: ${rollingAverage5.current} : ${avg5}`);
+
             
             if (event.accelerationIncludingGravity && event.acceleration) {
                 setMotionData({
@@ -62,7 +71,8 @@ export function useDeviceMotion(refreshHZ = 25) {
                         //targets lean in y axis with phone flat
                         //even without calibration seems to be very accurate, i suspect do to not relying on an assumption
                         //that the sensor will read the full force of gravity at rest (no hard coded G=-9.8...)
-                        flatYaxis: Math.atan(event.accelerationIncludingGravity.y/event.accelerationIncludingGravity.z) * (180 / Math.PI)
+                        flatYaxis: Math.atan(event.accelerationIncludingGravity.y/event.accelerationIncludingGravity.z) * (180 / Math.PI),
+                        flatY5Avg: avg5.toFixed(0)
                     },
                     rotationRate: {
                     alpha: event.rotationRate?.alpha ?? 0,

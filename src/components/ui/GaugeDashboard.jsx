@@ -102,6 +102,14 @@ export function GaugeDashboard({ onEndRide }) {
       <div className="h-full flex flex-row portrait:flex-col items-center justify-center gap-2">
         <div className="card bg-base-content/20 portrait:hidden w-1/6 h-full portrait:w-1/3 flex items-center justify-center">
           {maxLeftStat}
+          <div className="stats m-2 stats-vertical bg-base-300 shadow">
+            <div className="stat">
+              <div className="stat-title">Smooth:</div>
+              <div className="stat-value text-center">
+                {Logger.motionData.tilt.flatY5Avg}°
+              </div>
+            </div>
+          </div>
         </div>
         <div
           className="card size-full bg-base-300 portrait:w-full portrait:order-first"
