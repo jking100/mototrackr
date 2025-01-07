@@ -32,21 +32,23 @@ export function Home() {
   );
 
   return (
-    <div className="flex min-h-dvh items-center">
-      <div className="card bg-base-300 ml-2 mr-2 shadow-2xl">
-        <div className="card-body">
-          <h1 className="text-5xl">MotoTrackr</h1>
-          <p className="text-center text-lg text-primary">
-            Track your riding performance with precision
-          </p>
-          <p className="text-left text-sm text-base-content/70 mt-4 mb-2">
-            Capture essential metrics from your motorcycle rides including
-            maximum lean angles, acceleration data, and route analytics. Perfect
-            for riders looking to improve their technique and track their
-            progress over time.
-          </p>
-          <div className="card-actions justify-center">
-            {installInstructions}
+    <div className="flex justify-center items-center min-h-dvh w-full">
+      <div className="w-dvw md:w-96 p-2">
+        <div className="card bg-base-300 shadow-xl">
+          <div className="card-body">
+            <h1 className="text-5xl">MotoTrackr</h1>
+            <p className="text-center text-lg text-primary">
+              Track your riding performance with precision
+            </p>
+            <p className="text-left text-sm text-base-content/70 mt-4 mb-2">
+              Capture essential metrics from your motorcycle rides including
+              maximum lean angles, acceleration data, and route analytics.
+              Perfect for riders looking to improve their technique and track
+              their progress over time.
+            </p>
+            <div className="card-actions justify-center">
+              {installInstructions}
+            </div>
           </div>
         </div>
       </div>
