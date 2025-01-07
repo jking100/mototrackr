@@ -118,6 +118,9 @@ export function GaugeDashboard({ onEndRide }) {
           {mainPanelDisplay && (
             <MotorcycleLeanGauge leanAngle={Logger.motionData.tilt.flatYaxis} />
           )}
+          {mainPanelDisplay && (
+            <MotorcycleLeanGauge leanAngle={Logger.motionData.tilt.flatYaxisSmooth} />
+          )}
           {!mainPanelDisplay && (
             <div className="card p-2 w-full h-72">
               {Logger.DiagnosticsDisplay()}
