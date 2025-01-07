@@ -4,7 +4,6 @@ import { useContext, useState, useEffect } from "react";
 
 import { LoggerContext } from "./LoggerContext";
 
-import { LeanAngleWidget } from "@/components/widgets/leanAngleWidget";
 import { GaugeDashboard } from "@/components/ui/GaugeDashboard";
 
 export default function AppRecord({ onEndRide }) {
