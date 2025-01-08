@@ -78,10 +78,16 @@ export function useDeviceMotion(refreshHZ = 25) {
       function smoothEMA(newReading) {
         let lastValue = prevLean.current;
         const ALPHA = 0.4; // smoothing factor (0-1), lower = smoother
+        const DECAY_RATE = 0.5; // Values closer to 1 decay slower
 
         lastValue = ALPHA * newReading + (1 - ALPHA) * lastValue;
-        prevLean.current = lastValue;
 
+        // Apply decay, adds a stickyness+supression below its threshold value
+        if (Math.abs(lastValue) < 9) {
+          lastValue -= DECAY_RATE * lastValue;
+        }
+
+        prevLean.current = lastValue;
         return lastValue;
       }
 
