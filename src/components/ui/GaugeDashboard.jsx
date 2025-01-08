@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { LoggerContext } from "@/components/motoLeanApp/LoggerContext";
 
 import { MotorcycleLeanGauge } from "@/components/ui/MotorcycleLeanGauge";
@@ -9,16 +9,17 @@ export function GaugeDashboard({ onEndRide }) {
   const Logger = useContext(LoggerContext);
   const [mainPanelDisplay, setMainPanelDisplay] = useState(true);
 
+  const prevTime = useRef(0);
+
   const elapsedTime = () => {
     if (Logger.GPSReadings.length > 0) {
+
       if (Logger.isLogging) {
         const delta = Date.now() - Logger.GPSReadings[0].time;
-        return (delta / 1000).toFixed(0);
+        prevTime.current = (delta / 1000).toFixed(0);
+        return prevTime.current;
       }
-      const delta =
-        Logger.GPSReadings[Logger.GPSReadings.length - 1].time -
-        Logger.GPSReadings[0].time;
-      return (delta / 1000).toFixed(0);
+      return prevTime.current;
     }
     return 0;
   };
@@ -44,7 +45,7 @@ export function GaugeDashboard({ onEndRide }) {
     <div className="stats w-full stats-vertical bg-base-300 shadow">
       <div className="stat">
         <div className="stat-title">Max Right</div>
-        <div className="stat-value text-center">{Logger.maxLeanLeft()}°</div>
+        <div className="stat-value text-center">{Logger.maxLeanRight()}°</div>
       </div>
     </div>
   );
