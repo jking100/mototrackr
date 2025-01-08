@@ -86,7 +86,7 @@ export function LoggerProvider({children}) {
 
     const DiagnosticsDisplay = () => {
         return (
-            <div className="card overflow-y-auto bg-base-100">
+            <div className="card overflow-y-auto bg-base-100 w-full">
                 <div className="card-body">
                     <h2 className="card-title text-2xl font-bold">Diagnostic Info</h2>
 
@@ -110,9 +110,9 @@ export function LoggerProvider({children}) {
                     </div>
 
                     {/* Motion Data Section */}
-                    <div className="mb-4">
+                    <div className="mb-4 w-full">
                         <h3 className="text-xl font-semibold mb-2">Motion Data</h3>
-                        <pre className="bg-base-300 text-base-content p-4 overflow-auto">
+                        <pre className="bg-base-300 text-base-content p-4 w-72 overflow-auto">
                             {JSON.stringify(motionData, null, 2)}
                         </pre>
                     </div>
