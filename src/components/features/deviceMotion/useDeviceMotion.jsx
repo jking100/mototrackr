@@ -70,12 +70,12 @@ export function useDeviceMotion(refreshHZ = 25) {
           event.accelerationIncludingGravity.y /
             event.accelerationIncludingGravity.z
         ) *
-        (180 / Math.PI); 
+        (180 / Math.PI);
 
       //"exponential moving average" way of smoothing sensor readings
       //lightweight calc, and no buffer (only uses last reading) so its responsive
       //very resistant to shaking, while still showing true angle
-      function smoothAngle(newReading) {
+      function smoothEMA(newReading) {
         let lastValue = prevLean.current;
         const ALPHA = 0.4; // smoothing factor (0-1), lower = smoother
 
@@ -85,28 +85,28 @@ export function useDeviceMotion(refreshHZ = 25) {
         return lastValue;
       }
 
-        setMotionData({
-          accelerationIncludingGravity: {
-            x: event.accelerationIncludingGravity.x ?? 0,
-            y: event.accelerationIncludingGravity.y ?? 0,
-            z: event.accelerationIncludingGravity.z ?? 0,
-          },
-          acceleration: {
-            x: event.acceleration.x ?? 0,
-            y: event.acceleration.y ?? 0,
-            z: event.acceleration.z ?? 0,
-          },
-          tilt: {
-            //2axis equation thanks to https://www.analog.com/en/resources/app-notes/an-1057.html
-            flatYaxis: leanY,
-            flatYaxisSmooth: smoothAngle(leanY),
-          },
-          rotationRate: {
-            alpha: event.rotationRate.alpha ?? 0,
-            beta: event.rotationRate.beta ?? 0,
-            gamma: event.rotationRate.gamma ?? 0,
-          },
-        });
+      setMotionData({
+        accelerationIncludingGravity: {
+          x: event.accelerationIncludingGravity.x ?? 0,
+          y: event.accelerationIncludingGravity.y ?? 0,
+          z: event.accelerationIncludingGravity.z ?? 0,
+        },
+        acceleration: {
+          x: event.acceleration.x ?? 0,
+          y: event.acceleration.y ?? 0,
+          z: event.acceleration.z ?? 0,
+        },
+        tilt: {
+          //2axis equation thanks to https://www.analog.com/en/resources/app-notes/an-1057.html
+          flatYaxis: leanY,
+          flatYaxisSmooth: smoothEMA(leanY),
+        },
+        rotationRate: {
+          alpha: event.rotationRate.alpha ?? 0,
+          beta: event.rotationRate.beta ?? 0,
+          gamma: event.rotationRate.gamma ?? 0,
+        },
+      });
     };
     window.addEventListener("devicemotion", handleMotion);
 
