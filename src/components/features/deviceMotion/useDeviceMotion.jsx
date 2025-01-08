@@ -8,7 +8,7 @@ export function useDeviceMotion(refreshHZ = 25) {
   const [permissionNeeded, setPermissionNeeded] = useState(true);
   const [isAvailable, setIsAvailable] = useState(false);
 
-  const rollingAverage5 = useRef([0, 0, 0, 0, 0, 0, 0, 0, 0, 0].map(Number));
+  const prevLean = useRef(0);
 
   const [motionData, setMotionData] = useState({
     acceleration: {
@@ -62,28 +62,29 @@ export function useDeviceMotion(refreshHZ = 25) {
         return;
       }
       lastUpdateTime.current = now;
-      const avg = (arr) =>
-        arr.reduce((a, b) => a + parseFloat(b), 0) / arr.length;
+
+      //lean angle pivoting around the x axis with the phone horizontal
+      //2axis equation thanks to https://www.analog.com/en/resources/app-notes/an-1057.html
       const leanY =
         Math.atan(
           event.accelerationIncludingGravity.y /
             event.accelerationIncludingGravity.z
         ) *
-        (180 / Math.PI);
-      const oldAvg = avg(rollingAverage5.current.map(Number));
+        (180 / Math.PI); 
 
-      if (Math.abs(leanY) < Math.abs(oldAvg*2)){
-        rollingAverage5.current.unshift(leanY);
-        rollingAverage5.current.pop();
-      } else {
-        rollingAverage5.current.unshift(leanY/2);
-        rollingAverage5.current.pop();
+      //"exponential moving average" way of smoothing sensor readings
+      //lightweight calc, and no buffer (only uses last reading) so its responsive
+      //very resistant to shaking, while still showing true angle
+      function smoothAngle(newReading) {
+        let lastValue = prevLean.current;
+        const ALPHA = 0.4; // smoothing factor (0-1), lower = smoother
+
+        lastValue = ALPHA * newReading + (1 - ALPHA) * lastValue;
+        prevLean.current = lastValue;
+
+        return lastValue;
       }
 
-      const smoothLeanY = avg(rollingAverage5.current.map(Number));
-      
-
-      if (event.accelerationIncludingGravity && event.acceleration) {
         setMotionData({
           accelerationIncludingGravity: {
             x: event.accelerationIncludingGravity.x ?? 0,
@@ -97,24 +98,15 @@ export function useDeviceMotion(refreshHZ = 25) {
           },
           tilt: {
             //2axis equation thanks to https://www.analog.com/en/resources/app-notes/an-1057.html
-            //targets lean in y axis with phone flat
-            //even without calibration seems to be very accurate, i suspect do to not relying on an assumption
-            //that the sensor will read the full force of gravity at rest (no hard coded G=-9.8...)
-            flatYaxis:
-              Math.atan(
-                event.accelerationIncludingGravity.y /
-                  event.accelerationIncludingGravity.z
-              ) *
-              (180 / Math.PI),
-            flatYaxisSmooth: smoothLeanY,
+            flatYaxis: leanY,
+            flatYaxisSmooth: smoothAngle(leanY),
           },
           rotationRate: {
-            alpha: event.rotationRate?.alpha ?? 0,
-            beta: event.rotationRate?.beta ?? 0,
-            gamma: event.rotationRate?.gamma ?? 0,
+            alpha: event.rotationRate.alpha ?? 0,
+            beta: event.rotationRate.beta ?? 0,
+            gamma: event.rotationRate.gamma ?? 0,
           },
         });
-      }
     };
     window.addEventListener("devicemotion", handleMotion);
 
