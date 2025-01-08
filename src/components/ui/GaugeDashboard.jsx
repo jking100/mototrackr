@@ -116,9 +116,6 @@ export function GaugeDashboard({ onEndRide }) {
           onClick={() => setMainPanelDisplay(!mainPanelDisplay)}
         >
           {mainPanelDisplay && (
-            <MotorcycleLeanGauge leanAngle={Logger.motionData.tilt.flatYaxis} />
-          )}
-          {mainPanelDisplay && (
             <MotorcycleLeanGauge leanAngle={Logger.motionData.tilt.flatYaxisSmooth} />
           )}
           {!mainPanelDisplay && (
