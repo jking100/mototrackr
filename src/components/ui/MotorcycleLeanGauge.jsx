@@ -12,7 +12,7 @@ export const MotorcycleLeanGauge = ({
   }) => {
     
     return (
-        <div className="w-full">
+        <div className="">
           <GaugeComponent
           className=""
           type="semicircle"
