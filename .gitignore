@@ -1,6 +1,7 @@
 *.pem
 .env
 devlog*.md
+cspell-wordlist.txt
 
 # Logs
 logs
