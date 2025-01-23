@@ -54,7 +54,8 @@ export default function AppViewCoordinator () {
             case appViews.RESULTS:
                 return (
                     <AppResults 
-                        onHome={navigationHandlers.goToHome}
+                        onBackToRide={navigationHandlers.goToRecord}
+                        onRestartRide={navigationHandlers.goToRecord}
                         onSubmitRide={navigationHandlers.goToSubmit}
                     />
                 );
@@ -63,6 +64,7 @@ export default function AppViewCoordinator () {
                     <AppSubmit 
                         onHome={navigationHandlers.goToHome}
                         onSubmitRideToDB={navigationHandlers.goToDBRecords}
+                        onBackToResults={navigationHandlers.goToResults}
                     />
                 );
             default:

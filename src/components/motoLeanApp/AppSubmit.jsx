@@ -1,24 +1,30 @@
 import PropTypes from "prop-types";
 
-export default function AppSubmit({ onHome, onSubmitRideToDB }) {
+import { useContext } from "react";
+
+import { LoggerContext } from "./LoggerContext";
+
+export default function AppSubmit({ onHome, onSubmitRideToDB, onBackToResults }) {
+  const Logger = useContext(LoggerContext);
+
   return (
-    <div className="flex size-full justify-center items-center">
-      <div className="card portrait:w-full landscape:w-3/4 bg-base-300 m-2 max-w-3xl">
+    <div className="flex justify-center items-center h-dvh p-2">
+      <div className="card bg-base-300 shadow-xl w-full p-2 ">
+        <div className="card-title">
+          Share Ride - UNDER DEVELOPMENT
+        </div>
         <div className="card-body">
-          <h2 className="card-title justify-center mb-4">Submit Results</h2>
-          <div className="form-container mb-4">
-            <div className="min-h-[100px] bg-base-200 rounded-lg p-4">
-              Form will go here
-            </div>
-          </div>
-          <div className="flex flex-col gap-2 sm:flex-row sm:justify-end">
-            <button className="btn btn-accent" onClick={onHome}>
-              Back to Home
+          <p>This section is currently under development. Soon you&apos;ll be able to view more detailed analytics of your rides, (i.e. visualizations of your route with lean angles) with the option to publically share them to this site. Check back for updates as we roll out these exciting features.</p>
+        </div>
+        <div className="card-actions justify-center">
+            <button
+              onClick={() => {
+                onBackToResults();
+              }}
+              className="btn btn-primary"
+            >
+              Back
             </button>
-            <button className="btn btn-primary" onClick={onSubmitRideToDB}>
-              Submit Ride: Public
-            </button>
-          </div>
         </div>
       </div>
     </div>
@@ -28,4 +34,5 @@ export default function AppSubmit({ onHome, onSubmitRideToDB }) {
 AppSubmit.propTypes = {
   onHome: PropTypes.func.isRequired,
   onSubmitRideToDB: PropTypes.func.isRequired,
+  onBackToResults: PropTypes.func.isRequired
 };

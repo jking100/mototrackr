@@ -4,7 +4,7 @@ import { useContext } from "react";
 
 import { LoggerContext } from "./LoggerContext";
 
-export default function AppResults({ onHome, onSubmitRide }) {
+export default function AppResults({ onRestartRide, onBackToRide, onSubmitRide }) {
   const Logger = useContext(LoggerContext);
 
   const getMaxLeanLeft = () => {
@@ -53,7 +53,15 @@ export default function AppResults({ onHome, onSubmitRide }) {
           <div className="card-actions justify-center">
             <button
               onClick={() => {
-                onHome();
+                onBackToRide();
+              }}
+              className="btn btn-primary"
+            >
+              Back to Logging
+            </button>
+            <button
+              onClick={() => {
+                onRestartRide();
                 Logger.resetGPSDataLog();
               }}
               className="btn btn-primary"
@@ -71,6 +79,7 @@ export default function AppResults({ onHome, onSubmitRide }) {
 }
 
 AppResults.propTypes = {
-  onHome: PropTypes.func.isRequired,
   onSubmitRide: PropTypes.func.isRequired,
+  onRestartRide: PropTypes.func.isRequired,
+  onBackToRide: PropTypes.func.isRequired
 };
