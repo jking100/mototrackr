@@ -1,0 +1,14 @@
+{
+  "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+  "version": "0.2",
+  "dictionaryDefinitions": [
+    {
+      "name": "cspell-wordlist",
+      "path": "./cspell-wordlist.txt",
+      "addWords": true
+    }
+  ],
+  "dictionaries": ["cspell-wordlist", "en_US", "softwareTerms"],
+  "ignorePaths": ["node_modules", "public", "/cspell-wordlist.txt"],
+  "allowCompoundWords": true
+}
