@@ -63,24 +63,24 @@ export function LoggerProvider({ children }) {
         switch (error.code) {
           case 1: // PERMISSION_DENIED
             setError(
-              "Location access was denied. Please check:\n1. Safari Settings > Privacy & Security > Location Services is ON\n2. Safari Settings > Privacy & Security > Location Services > Safari Websites > Allow"
+              "Location access was denied. Please check:\n1. Safari Settings > Privacy & Security > Location Services is ON\n2. Safari Settings > Privacy & Security > Location Services > Safari Websites > Allow",
             );
             break;
           case 2: // POSITION_UNAVAILABLE
             setError(
-              "Cannot get location. Please ensure:\n1. Location Services is enabled in iOS Settings\n2. You have a clear view of the sky\n3. You're not in Airplane Mode"
+              "Cannot get location. Please ensure:\n1. Location Services is enabled in iOS Settings\n2. You have a clear view of the sky\n3. You're not in Airplane Mode",
             );
             break;
           case 3: // TIMEOUT
             setError(
-              "Location request timed out. Please check your internet connection and try again."
+              "Location request timed out. Please check your internet connection and try again.",
             );
             break;
           default:
             setError(`Unknown error: ${error.message}`);
         }
       },
-      options
+      options,
     );
   };
 

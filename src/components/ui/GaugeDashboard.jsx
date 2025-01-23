@@ -13,7 +13,6 @@ export function GaugeDashboard({ onEndRide }) {
 
   const elapsedTime = () => {
     if (Logger.GPSReadings.length > 0) {
-
       if (Logger.isLogging) {
         const delta = Date.now() - Logger.GPSReadings[0].time;
         prevTime.current = (delta / 1000).toFixed(0);

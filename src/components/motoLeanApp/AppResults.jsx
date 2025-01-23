@@ -4,7 +4,11 @@ import { useContext } from "react";
 
 import { LoggerContext } from "./LoggerContext";
 
-export default function AppResults({ onRestartRide, onBackToRide, onSubmitRide }) {
+export default function AppResults({
+  onRestartRide,
+  onBackToRide,
+  onSubmitRide,
+}) {
   const Logger = useContext(LoggerContext);
 
   const getMaxLeanLeft = () => {
@@ -81,5 +85,5 @@ export default function AppResults({ onRestartRide, onBackToRide, onSubmitRide }
 AppResults.propTypes = {
   onSubmitRide: PropTypes.func.isRequired,
   onRestartRide: PropTypes.func.isRequired,
-  onBackToRide: PropTypes.func.isRequired
+  onBackToRide: PropTypes.func.isRequired,
 };

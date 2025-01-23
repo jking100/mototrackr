@@ -24,13 +24,13 @@ export default function AppInstructions({ onStartRide }) {
                 </p>
               </div>
             </div>
-              <div className="card bg-base-300 p-4 m-2 max-w-72">
-                <div className="badge badge-lg">Step 3</div>
-                <p className="font-bold text-md">
-                  Your phone should be now be mounted flat and sideways to the
-                  bike with the screen up
-                </p>
-              </div>
+            <div className="card bg-base-300 p-4 m-2 max-w-72">
+              <div className="badge badge-lg">Step 3</div>
+              <p className="font-bold text-md">
+                Your phone should be now be mounted flat and sideways to the
+                bike with the screen up
+              </p>
+            </div>
             <div>
               <div className="alert alert-warning w-fit m-2">
                 <svg

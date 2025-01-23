@@ -14,13 +14,15 @@ export default function AppHome({ onStart, onViewResults }) {
           </h1>
 
           <p className="text-left">
-          Welcome to MotoTrackr, your personal motorcycle performance tracker. 
+            Welcome to MotoTrackr, your personal motorcycle performance tracker.
           </p>
           <p className="text-left">
-          Record lean angles, GPS data, and other metrics during your rides to help improve your skills.
+            Record lean angles, GPS data, and other metrics during your rides to
+            help improve your skills.
           </p>
           <p className="text-left">
-          Tap &apos;Start Ride&apos; below to begin tracking - you&apos;ll need to grant motion sensor permissions for the app to work.
+            Tap &apos;Start Ride&apos; below to begin tracking - you&apos;ll
+            need to grant motion sensor permissions for the app to work.
           </p>
 
           <div className="card-actions justify-center mt-6 gap-4">

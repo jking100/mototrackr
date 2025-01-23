@@ -3,9 +3,9 @@
 import AppViewCoordinator from "@/components/motoLeanApp/AppViewCoordinator";
 
 export function Log() {
-    return (
-        <>
-            <AppViewCoordinator />
-        </>
-    );
+  return (
+    <>
+      <AppViewCoordinator />
+    </>
+  );
 }

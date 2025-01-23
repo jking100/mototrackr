@@ -68,7 +68,7 @@ export function useDeviceMotion(refreshHZ = 25) {
       const leanY =
         Math.atan(
           event.accelerationIncludingGravity.y /
-            event.accelerationIncludingGravity.z
+            event.accelerationIncludingGravity.z,
         ) *
         (180 / Math.PI);
 
@@ -140,14 +140,14 @@ export function useDeviceMotion(refreshHZ = 25) {
         return true;
       } else {
         alert(
-          `Failure in DeviceMotion hook: Failed to get motion permissions - ${permission}`
+          `Failure in DeviceMotion hook: Failed to get motion permissions - ${permission}`,
         );
         setPermissionStatus(false);
         return false;
       }
     } catch (error) {
       alert(
-        `Error in DeviceMotion hook: Error requesting DeviceMotion permissions - ${error}`
+        `Error in DeviceMotion hook: Error requesting DeviceMotion permissions - ${error}`,
       );
       setPermissionStatus(false);
       return false;
@@ -159,14 +159,14 @@ export function useDeviceMotion(refreshHZ = 25) {
     // First, check if the device supports motion events
     if (!window.DeviceMotionEvent) {
       alert(
-        "!!!FATAL ERROR!!!: Your device appears to not have/support access to required sensors for this app"
+        "!!!FATAL ERROR!!!: Your device appears to not have/support access to required sensors for this app",
       );
       return;
     }
 
     setIsAvailable(true);
     setPermissionNeeded(
-      typeof DeviceMotionEvent.requestPermission === "function"
+      typeof DeviceMotionEvent.requestPermission === "function",
     );
   }, []);
 

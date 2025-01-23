@@ -28,7 +28,7 @@ export default function AppRecord({ onEndRide }) {
 
   return (
     <>
-      <GaugeDashboard onEndRide={onEndRide}/>
+      <GaugeDashboard onEndRide={onEndRide} />
     </>
   );
 }
