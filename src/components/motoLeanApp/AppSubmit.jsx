@@ -20,7 +20,7 @@ export default function AppSubmit({
             This section is currently under development. Soon you&apos;ll be
             able to view more detailed analytics of your rides, (i.e.
             visualizations of your route with lean angles) with the option to
-            publically share them to this site. Check back for updates as we
+            publicly share them to this site. Check back for updates as we
             roll out these exciting features.
           </p>
         </div>
