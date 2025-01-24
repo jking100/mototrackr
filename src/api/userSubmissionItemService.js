@@ -1,5 +1,6 @@
-//import { resolveConfig } from "vite";
-import { /*HTTP_API_BASE_URL,*/ HTTPS_API_BASE_URL } from "./config";
+
+//export const HTTP_API_BASE_URL = "https://localhost:5000/api";
+export const HTTPS_API_BASE_URL = "https://localhost:7011/api";
 
 /**
  * @typedef {Object} userSubmissionItem
