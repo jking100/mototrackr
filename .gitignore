@@ -2,6 +2,7 @@
 .env
 devlog*.md
 cspell-wordlist.txt
+/build
 
 # Logs
 logs
