@@ -8,7 +8,7 @@ Finally, users will be able to share this data to the site publicly, with the ho
 
 #### About
 
-This repo contains a progressive web app written using JavaScript and React. The app makes heavy use of device sensors and gps to capture and calculate various metrics on a time interval along the user’s ride.
+This repo contains a progressive web app written using JavaScript and React. The data collection and processing functions by use of device sensors and gps to capture and calculate various metrics on a time interval along the user’s ride. Alongside the logging functionality is a planned 'social' aspect to encourage user participation.
 
 As of v00.01 users are currently able to track their:
 
