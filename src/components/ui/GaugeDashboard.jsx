@@ -35,7 +35,7 @@ export function GaugeDashboard({ onEndRide }) {
     <div className="stats w-fit stats-vertical bg-base-300 shadow">
       <div className="stat">
         <div className="stat-title">Max Left</div>
-        <div className="stat-value text-center">{Logger.maxLeanLeft()}°</div>
+        <div className="stat-value text-center">{Logger.maxLeft}°</div>
       </div>
     </div>
   );
@@ -44,7 +44,7 @@ export function GaugeDashboard({ onEndRide }) {
     <div className="stats w-full stats-vertical bg-base-300 shadow">
       <div className="stat">
         <div className="stat-title">Max Right</div>
-        <div className="stat-value text-center">{Logger.maxLeanRight()}°</div>
+        <div className="stat-value text-center">{Logger.maxRight}°</div>
       </div>
     </div>
   );

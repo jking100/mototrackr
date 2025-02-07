@@ -9,7 +9,13 @@ export function LoggerProvider({ children }) {
   const [GPSReadings, setGPSReadings] = useState([]);
   //const [LeanReadings, setLeanReadings] = useState([]);
   const [error, setError] = useState(null);
-
+  const [maxLeft, setMaxLeft] = useState(0);
+  const [maxRight, setMaxRight] = useState(0);
+  
+  useEffect(() => {
+    setIsGPSAvailable("geolocation" in navigator);
+  }, []); //runs on mount once
+  
   const {
     motionData,
     isAvailable: isMotionAvailable,
@@ -19,8 +25,19 @@ export function LoggerProvider({ children }) {
   } = useDeviceMotion(5);
 
   useEffect(() => {
-    setIsGPSAvailable("geolocation" in navigator);
-  }, []); //runs on mount once
+    if(isLogging){
+      if (motionData.tilt.flatYaxisSmooth > 0) {
+        //right
+        setMaxRight(
+          Math.max(Math.abs(motionData.tilt.flatYaxisSmooth), maxRight).toFixed(0)
+        );
+      } else {
+        setMaxLeft(
+          Math.max(Math.abs(motionData.tilt.flatYaxisSmooth), maxLeft).toFixed(0)
+        );
+      }
+    }
+  }, [motionData.tilt.flatYaxisSmooth, maxRight, maxLeft]);
 
   //add current lean to latest gps reading as the gps readings list expands
   useEffect(() => {
@@ -33,13 +50,13 @@ export function LoggerProvider({ children }) {
         const updatedReadings = [...GPSReadings];
         updatedReadings[latestIndex] = {
           ...latestReading,
-          lean: motionData.tilt.flatYaxis.toFixed(1),
+          lean: motionData.tilt.flatYaxisSmooth.toFixed(1),
         };
         setGPSReadings(updatedReadings);
         //alert(JSON.stringify(updatedReadings));
       }
     }
-  }, [GPSReadings, motionData.tilt.flatYaxis]);
+  }, [GPSReadings, motionData.tilt.flatYaxisSmooth]);
 
   const getGPSData = () => {
     const options = {
@@ -85,8 +102,11 @@ export function LoggerProvider({ children }) {
   };
 
   const resetGPSDataLog = () => {
+    alert("Reset func called");
     setGPSReadings([]);
     setError([]);
+    setMaxLeft(0);
+    setMaxRight(0);
   };
 
   const DiagnosticsDisplay = () => {
@@ -202,6 +222,8 @@ export function LoggerProvider({ children }) {
     motionErrorBox,
     maxLeanRight,
     maxLeanLeft,
+    maxLeft,
+    maxRight,
     //diagnostics
     DiagnosticsDisplay,
   };

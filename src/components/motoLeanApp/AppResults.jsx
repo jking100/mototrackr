@@ -46,11 +46,11 @@ export default function AppResults({
             </div>
             <div className="stat">
               <div className="stat-title">Max Lean Left</div>
-              <div className="stat-value">{getMaxLeanLeft()}°</div>
+              <div className="stat-value">{Logger.maxLeft}°</div>
             </div>
             <div className="stat">
               <div className="stat-title">Max Lean Right</div>
-              <div className="stat-value">{getMaxLeanRight()}°</div>
+              <div className="stat-value">{Logger.maxRight}°</div>
             </div>
           </div>
 
